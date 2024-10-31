@@ -1,0 +1,16 @@
+{
+  "name": "my_electron_app",
+  "version": "1.0.0",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "@types/electron": "^X.X.X",
+    "@types/node": "^X.X.X",
+    "electron": "^X.X.X",
+    "electron-reload": "^X.X.X",
+    "typescript": "^X.X.X"
+  }
+}
