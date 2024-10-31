@@ -1,39 +1,64 @@
-console.log("Renderer")
-// Function to handle button click
-document.getElementById('selectMemoryCardButton')!.addEventListener('click', async () => {
-    // Call the openFileDialog function from the preload script
+let directoryPath: string = '';
+let noFilesInDirectory: boolean = false;
+
+// Element IDs
+const selectMemoryCardButtonId = 'selectMemoryCardButton';
+const createFileStructureButtonId = 'createFileStructureButton';
+const pathIndicatorId = 'pathIndicator';
+const createDirectoryIndicatorId = 'createDirectoryIndicator';
+
+function updateDirectoryIndicatorMessage(message: string, isVisible: boolean): void {
+    const dirMsgElement = document.getElementById(createDirectoryIndicatorId)!;
+    dirMsgElement.textContent = message;
+    dirMsgElement.style.visibility = isVisible ? 'visible' : 'hidden';
+}
+
+function updatePathIndicatorMessage(message: string): void {
+    const pathMsgElement = document.getElementById(pathIndicatorId)!;
+    pathMsgElement.textContent = message;
+}
+
+async function checkDirectoryIsEmpty(filePath: string): Promise<void> {
+    directoryPath = filePath;
+    updatePathIndicatorMessage(`Selected: ${directoryPath}`);
+    noFilesInDirectory = await window.electron.isTargetEmpty(filePath);
+
+    if (noFilesInDirectory) {
+        updateDirectoryIndicatorMessage('', false); // Hide if empty
+    } else {
+        updateDirectoryIndicatorMessage('Memory card is not empty!', true);
+    }
+}
+
+// Event listener for selecting the memory card
+document.getElementById(selectMemoryCardButtonId)!.addEventListener('click', async () => {
     const filePath = await window.electron.openFileDialog();
 
-    // Update the status indicator based on the file selection
-    const statusIndicator = document.getElementById('statusIndicator')!;
-    const createFileStructureButton = document.getElementById('createFileStructureButton')!;
-
     if (filePath) {
-        statusIndicator.textContent = `Selected: ${filePath}`;
-        // Show the create file structure button
-        createFileStructureButton.style.display = 'block';
+        await checkDirectoryIsEmpty(filePath);
     } else {
-        statusIndicator.textContent = 'No card selected';
-        // Hide the create file structure button
-        createFileStructureButton.style.display = 'none';
+        updatePathIndicatorMessage('No card selected');
+        updateDirectoryIndicatorMessage('', false); // Hide the indicator
     }
 });
 
-// Event listener for the new button (optional - to implement functionality)
-document.getElementById('createFileStructureButton')!.addEventListener('click', async () => {
-    const folderName = 'NewFolder'; // Name of the folder to create
-    const directoryPath = document.getElementById('statusIndicator')!.textContent?.replace('Selected: ', '') || '';
+// Event listener for creating the folder structure
+document.getElementById(createFileStructureButtonId)!.addEventListener('click', async () => {
+    if (!noFilesInDirectory) {
+        updateDirectoryIndicatorMessage('Memory card is not empty!', true);
+        return;
+    }
 
     try {
-        const createdFolderPath = await window.electron.createFolder(directoryPath, folderName);
-        console.log(`Folder created at: ${createdFolderPath}`);
-        alert(`Folder created at: ${createdFolderPath}`); // Show success message
-    } catch (error: unknown) {
-        console.error('Error creating folder:', error);
-        if (error instanceof Error) {
-            alert(`Error creating folder: ${error.message}`); // Show error message
-        } else {
-            alert('Error creating folder: An unknown error occurred.'); // Fallback for unexpected error types
+        const resultMessage = await window.electron.createFolder(directoryPath);
+        console.debug(resultMessage);
+        alert(resultMessage); // Consider replacing with SweetAlert2 for a better UI
+
+        if (resultMessage) {
+            noFilesInDirectory = false; // Mark as non-empty after folder creation
         }
+    } catch (error) {
+        console.error('Error creating folder structure:', error);
+        alert('Error creating folder structure'); // Show error alert
     }
 });

@@ -1,12 +1,10 @@
-import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+import {app, BrowserWindow, ipcMain, dialog} from 'electron';
+import {promises as fs} from 'fs';
 import path from 'path';
-import fs from 'fs';
-
-const MIN_WIDTH = 1200;
-const MIN_HEIGHT = 600;
+import {FOLDER_STRUCTURE, MIN_HEIGHT, MIN_WIDTH} from "./constants";
 
 function createWindow() {
-    console.log("create window")
+    console.debug("create window")
     const win = new BrowserWindow({
         width: MIN_WIDTH,
         height: MIN_HEIGHT,
@@ -24,34 +22,56 @@ function createWindow() {
 }
 
 ipcMain.handle('dialog:openFile', async () => {
-    console.log("dialog open file")
+    console.debug("dialog open file")
     const result = await dialog.showOpenDialog({
         properties: ['openDirectory'], // Changed to openDirectory for USB drives
         filters: [
-            { name: 'All Files', extensions: ['*'] },
+            {name: 'All Files', extensions: ['*']},
         ],
     });
 
     return result.filePaths[0] || null;
 });
 
-ipcMain.handle('folder:create', async (_event, directoryPath: string, folderName: string) => {
-    const folderPath = path.join(directoryPath, folderName);
-    await fs.promises.mkdir(folderPath, { recursive: true });
-    return folderPath;
+ipcMain.handle('folder:create', async (_event, directoryPath: string) => {
+    await createFolderStructure(directoryPath);
+    return `Folder structure created at: ${directoryPath}`;
 });
+
+ipcMain.handle('folder:isEmpty', async (_event, directoryPath: string): Promise<boolean> => {
+    try {
+        const files = await fs.readdir(directoryPath);
+        return files.length === 0; // Returns true if empty, false if not
+    } catch (error) {
+        console.debug('Error checking if directory is empty:', error);
+        throw new Error('Could not check directory contents.');
+    }
+});
+
+async function createFolderStructure(basePath: string) {
+    try {
+        for (const folder of FOLDER_STRUCTURE) {
+            const folderPath = path.join(basePath, folder);
+            await fs.mkdir(folderPath, {recursive: true});
+        }
+        console.debug('Folder structure created successfully.');
+    } catch (error) {
+        console.error('Error creating folder structure:', error);
+        throw new Error('Failed to create folder structure');
+    }
+}
 
 app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
-    console.log("closing all windows")
+    console.debug("closing all windows")
     if (process.platform !== 'darwin') {
         app.quit();
     }
 });
 
 app.on('activate', () => {
-    console.log("activate")
+    console.debug("activate")
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
     }

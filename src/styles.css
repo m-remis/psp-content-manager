@@ -76,9 +76,17 @@ button {
     text-align: center; /* Center text within the button */
 }
 
-#statusIndicator {
+#pathIndicator {
     color: #ffffff;
     font-size: 1.2rem;
     margin-left: 1%; /* Space between button and status text */
     margin-top: 10%;
+}
+
+#createDirectoryIndicator {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin-left: 1%; /* Space between button and status text */
+    margin-top: 10%;
+    visibility: hidden
 }
