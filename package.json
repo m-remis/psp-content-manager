@@ -1,0 +1,42 @@
+{
+  "name": "psp_tool",
+  "version": "1.0.0",
+  "description": "Cross-platform tool for psp filesystem manipulation",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "electron .",
+    "package-win": "npm run build && electron-builder --win",
+    "package-linux": "npm run build && electron-builder --linux",
+    "purge": "rimraf release dist node_modules"
+  },
+  "build": {
+    "appId": "com.example.psptool",
+    "productName": "PSPTool",
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "src/index.html",
+      "src/styles.css"
+    ],
+    "directories": {
+      "output": "release/${os}",
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Utility"
+    }
+  },
+  "author": "https://github.com/m-remis",
+  "devDependencies": {
+    "@types/node": "22.8.6",
+    "electron": "33.0.2",
+    "electron-builder": "25.1.8",
+    "rimraf": "6.0.1",
+    "typescript": "5.6.3"
+  }
+}
