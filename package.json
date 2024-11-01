@@ -27,9 +27,11 @@
       "target": "nsis"
     },
     "linux": {
-      "target": "AppImage"
+      "target": "AppImage",
+      "category": "Utility"
     }
   },
+  "author": "https://github.com/m-remis",
   "devDependencies": {
     "@types/node": "22.8.6",
     "electron": "33.0.2",

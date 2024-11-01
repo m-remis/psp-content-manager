@@ -10,8 +10,6 @@ export const FOLDER_STRUCTURE = [
     'PSP/GAME150',
     'PSP/COMMON',
     'PSP/GAME',
-    'PSP/MUSIC',
-    'PSP/PHOTO',
     'PSP/SAVEDATA',
     'PSP/SYSTEM',
     'PSP/GAME/UPDATE',
@@ -22,6 +20,13 @@ export const FOLDER_STRUCTURE = [
     'PSP/LICENSE',
     'PSP/GAME/RECOVERY'
 ];
+
+export const THEMES_FOLDER = "PSP/THEME";
+export const GAMES_FOLDER = "ISO";
+export const MUSIC_FOLDER = "MUSIC";
+export const VIDEO_FOLDER = "VIDEO";
+export const PICTURES_FOLDER = "PICTURE";
+export const SAVE_FILES_FOLDER = "PSP/SAVEDATA";
 
 export const MIN_WIDTH = 1200;
 export const MIN_HEIGHT = 600;

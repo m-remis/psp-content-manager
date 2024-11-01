@@ -1,7 +1,15 @@
-import {app, BrowserWindow, ipcMain, dialog} from 'electron';
+import {app, BrowserWindow, ipcMain, dialog, shell} from 'electron';
 import {promises as fs} from 'fs';
 import path from 'path';
-import {FOLDER_STRUCTURE, MIN_HEIGHT, MIN_WIDTH} from "./constants";
+import {
+    FOLDER_STRUCTURE,
+    GAMES_FOLDER,
+    MIN_HEIGHT,
+    MIN_WIDTH, MUSIC_FOLDER,
+    PICTURES_FOLDER,
+    SAVE_FILES_FOLDER, THEMES_FOLDER,
+    VIDEO_FOLDER
+} from "./constants";
 
 if (!app.requestSingleInstanceLock()) {
     console.debug("already running")
@@ -34,7 +42,7 @@ function createWindow() {
 }
 
 app.on('second-instance', (event, commandLine, workingDirectory) => {
-    // Focus on the main window if it exists
+    console.debug("Main - second instance")
     if (mainWindow) {
         if (mainWindow.isMinimized()) mainWindow.restore();
         mainWindow.focus();
@@ -42,7 +50,7 @@ app.on('second-instance', (event, commandLine, workingDirectory) => {
 });
 
 ipcMain.handle('dialog:openFile', async () => {
-    console.debug("dialog open file")
+    console.debug("Main - dialog open file")
     const result = await dialog.showOpenDialog({
         properties: ['openDirectory'], // Changed to openDirectory for USB drives
         filters: [
@@ -54,11 +62,13 @@ ipcMain.handle('dialog:openFile', async () => {
 });
 
 ipcMain.handle('folder:create', async (_event, directoryPath: string) => {
+    console.debug("Main - folder create")
     await createFolderStructure(directoryPath);
     return `Folder structure created at: ${directoryPath}`;
 });
 
 ipcMain.handle('folder:isEmpty', async (_event, directoryPath: string): Promise<boolean> => {
+    console.debug("Main - folder is empty")
     try {
         const files = await fs.readdir(directoryPath);
         return files.length === 0; // Returns true if empty, false if not
@@ -68,7 +78,45 @@ ipcMain.handle('folder:isEmpty', async (_event, directoryPath: string): Promise<
     }
 });
 
+
+// todo do something about this...
+// Define a type for folder names
+type FolderName = 'themes' | 'music' | 'pictures' | 'videos' | 'games' | 'saveFiles';
+
+// Folder mapping
+const folderMap: Record<FolderName, string> = {
+    themes: THEMES_FOLDER,
+    music: MUSIC_FOLDER,
+    pictures: PICTURES_FOLDER,
+    videos: VIDEO_FOLDER,
+    games: GAMES_FOLDER,
+    saveFiles: SAVE_FILES_FOLDER,
+};
+
+ipcMain.handle('dialog:openTargetDirectory', async (_event, directoryPath: string, targetFolder: FolderName) => {
+    console.debug("Main - open directory");
+    try {
+        const fullPath = path.join(directoryPath, folderMap[targetFolder]);
+        console.debug(`Opening directory at: ${fullPath}`);
+
+        // Check if the directory exists
+        try {
+            await fs.stat(fullPath);
+        } catch (statError) {
+            console.error('Directory does not exist:', fullPath);
+            return false; // Directory does not exist
+        }
+
+        await shell.openPath(fullPath);
+        return true; // Indicate success
+    } catch (error) {
+        console.error('Error opening directory:', error);
+        return false; // Indicate failure
+    }
+});
+
 async function createFolderStructure(basePath: string) {
+    console.debug("Main - create folder structure")
     try {
         for (const folder of FOLDER_STRUCTURE) {
             const folderPath = path.join(basePath, folder);

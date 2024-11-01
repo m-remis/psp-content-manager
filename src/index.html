@@ -1,42 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="../src/styles.css">
-  <title>PSP Tool</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="../src/styles.css">
+    <title>PSP Tool</title>
 </head>
 <body>
 
 <!-- Main Content -->
 <div class="w3-container" style="background-color: transparent;">
-  <br>
-  <div class="w3-row">
-    <div class="w3-col s12">
-      <button id="selectMemoryCardButton" class="w3-button w3-blue w3-round">Select Memory Card</button>
-      <span id="pathIndicator" class="w3-text-white">No card selected</span>
-      <br>
-      <button id="createFileStructureButton" class="w3-button w3-orange w3-round">Create File Structure</button>
-      <span id="createDirectoryIndicator" class="w3-text-white">Memory card is empty !</span>
+    <br>
+    <div class="w3-row">
+        <div class="w3-col s12">
+            <button id="selectMemoryCardButton" class="w3-button w3-blue w3-round">Select Memory Card</button>
+            <span id="pathIndicator" class="w3-text-white">No card selected</span>
+            <br>
+            <button id="createFileStructureButton" class="w3-button w3-orange w3-round">Create File Structure</button>
+            <span id="createDirectoryIndicator" class="w3-text-white">Memory card is empty !</span>
+            <br>
+            <div class="w3-row", id="folders">
+                <button id="btnOpenThemes" class="w3-button w3-red w3-round">Open Themes</button>
+                <br>
+                <button id="btnOpenGames" class="w3-button w3-red w3-round">Open Games</button>
+                <br>
+                <button id="btnOpenMusic" class="w3-button w3-red w3-round">Open Music</button>
+                <br>
+                <button id="btnOpenVideo" class="w3-button w3-red w3-round">Open Video</button>
+                <br>
+                <button id="btnOpenPictures" class="w3-button w3-red w3-round">Open Pictures</button>
+                <br>
+                <button id="btnOpenSaveFiles" class="w3-button w3-red w3-round">Open Save Files</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- Animated Background -->
 <div class="area">
-  <ul class="circles">
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-  </ul>
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
 </div>
 
 <script src="../dist/renderer.js" defer></script>
