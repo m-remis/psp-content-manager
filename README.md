@@ -1,3 +1,8 @@
+![node](https://img.shields.io/badge/Node-green)
+![npm](https://img.shields.io/badge/npm-red)
+![electron](https://img.shields.io/badge/Electron%20-purple)
+![typescript](https://img.shields.io/badge/Typescript%20-blue)
+
 ## psp-tool - work in progress
 
 ### Purpose
@@ -70,17 +75,41 @@ _Develop a simple application window to verify the project setup and display an 
   _Develop basic user interface to automatically generate the basic PSP folder tree required for different file types._
 
 
-#### Build and test
- 
-- npm install
-- npm run build
-- npm start
+### How to setup development environment
 
-#### Create executables
 
-- npm run package-linux
-- npm run package-win
+#### Make sure to have installed
+
+* [Node](https://nodejs.org/en)
+
+#### Install dependencies
+
+```` 
+npm install
+````
+#### Build the project
+````
+npm run build
+````
+#### Start the project
+````
+npm start
+````
+
+#### Creating executables
+
+````
+npm run package-linux
+````
+````
+npm run package-win
+````
+Executables can be then found under [release](release)
+ - [linux](release/linux)
+ - [windows](release/win)
 
 #### Remove all downloaded dependencies and generated files
 
-- npm run purge
+````
+npm run purge
+````
