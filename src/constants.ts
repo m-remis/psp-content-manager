@@ -21,12 +21,18 @@ export const FOLDER_STRUCTURE = [
     'PSP/GAME/RECOVERY'
 ];
 
-export const THEMES_FOLDER = "PSP/THEME";
-export const GAMES_FOLDER = "ISO";
-export const MUSIC_FOLDER = "MUSIC";
-export const VIDEO_FOLDER = "VIDEO";
-export const PICTURES_FOLDER = "PICTURE";
-export const SAVE_FILES_FOLDER = "PSP/SAVEDATA";
+// Define a type for folder names
+export type FolderName = 'themes' | 'music' | 'pictures' | 'videos' | 'games' | 'saveFiles';
+
+// Folder mapping
+export const folderMap: Record<FolderName, string> = {
+    themes: "PSP/THEME",
+    music: "MUSIC",
+    pictures: "PICTURE",
+    videos: "VIDEO",
+    games: "ISO",
+    saveFiles: "PSP/SAVEDATA",
+};
 
 export const MIN_WIDTH = 1200;
 export const MIN_HEIGHT = 600;

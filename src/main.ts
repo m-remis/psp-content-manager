@@ -1,15 +1,8 @@
 import {app, BrowserWindow, ipcMain, dialog, shell} from 'electron';
 import {promises as fs} from 'fs';
 import path from 'path';
-import {
-    FOLDER_STRUCTURE,
-    GAMES_FOLDER,
-    MIN_HEIGHT,
-    MIN_WIDTH, MUSIC_FOLDER,
-    PICTURES_FOLDER,
-    SAVE_FILES_FOLDER, THEMES_FOLDER,
-    VIDEO_FOLDER
-} from "./constants";
+import {FOLDER_STRUCTURE, folderMap, FolderName, MIN_HEIGHT, MIN_WIDTH} from "./constants";
+
 
 if (!app.requestSingleInstanceLock()) {
     console.debug("already running")
@@ -79,19 +72,6 @@ ipcMain.handle('folder:isEmpty', async (_event, directoryPath: string): Promise<
 });
 
 
-// todo do something about this...
-// Define a type for folder names
-type FolderName = 'themes' | 'music' | 'pictures' | 'videos' | 'games' | 'saveFiles';
-
-// Folder mapping
-const folderMap: Record<FolderName, string> = {
-    themes: THEMES_FOLDER,
-    music: MUSIC_FOLDER,
-    pictures: PICTURES_FOLDER,
-    videos: VIDEO_FOLDER,
-    games: GAMES_FOLDER,
-    saveFiles: SAVE_FILES_FOLDER,
-};
 
 ipcMain.handle('dialog:openTargetDirectory', async (_event, directoryPath: string, targetFolder: FolderName) => {
     console.debug("Main - open directory");

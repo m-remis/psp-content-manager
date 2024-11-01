@@ -48,11 +48,11 @@ document.getElementById(btnCreateFileStructureId)!.addEventListener('click', asy
 
         if (resultMessage) {
             updateDirectoryIndicatorMessage('Created', true);
-            noFilesInDirectory = false; // Mark as non-empty after folder creation
+            noFilesInDirectory = false;
         }
     } catch (error) {
         console.error('Error creating folder structure:', error);
-        alert('Error creating folder structure'); // Show error alert
+        alert('Error creating folder structure');
     }
 });
 
