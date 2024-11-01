@@ -31,11 +31,10 @@
     }
   },
   "devDependencies": {
-    "@types/node": "^X.X.X",
-    "electron": "^X.X.X",
-    "electron-builder": "^X.X.X",
-    "electron-reload": "^X.X.X",
-    "rimraf": "^X.X.X",
-    "typescript": "^X.X.X"
+    "@types/node": "22.8.6",
+    "electron": "33.0.2",
+    "electron-builder": "25.1.8",
+    "rimraf": "6.0.1",
+    "typescript": "5.6.3"
   }
 }
