@@ -88,9 +88,9 @@ button {
     font-size: 1.2rem;
     margin-left: 1%; /* Space between button and status text */
     margin-top: 10%;
-    visibility: hidden
+    visibility: hidden;
 }
 
-#folders {
+.folders {
     margin-top: 10%;
 }
