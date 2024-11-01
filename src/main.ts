@@ -3,9 +3,16 @@ import {promises as fs} from 'fs';
 import path from 'path';
 import {FOLDER_STRUCTURE, MIN_HEIGHT, MIN_WIDTH} from "./constants";
 
+if (!app.requestSingleInstanceLock()) {
+    console.debug("already running")
+    app.quit();
+}
+
+let mainWindow: BrowserWindow | null;
+
 function createWindow() {
     console.debug("create window")
-    const win = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: MIN_WIDTH,
         height: MIN_HEIGHT,
         minWidth: MIN_WIDTH,
@@ -17,9 +24,22 @@ function createWindow() {
         },
     });
 
-    win.setMenu(null);
-    win.loadFile(path.join(__dirname, '../src/index.html'));
+    mainWindow.setMenu(null);
+    mainWindow.loadFile(path.join(__dirname, '../src/index.html'));
+
+    // Handle the close event
+    mainWindow.on('closed', () => {
+        mainWindow = null;
+    });
 }
+
+app.on('second-instance', (event, commandLine, workingDirectory) => {
+    // Focus on the main window if it exists
+    if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore();
+        mainWindow.focus();
+    }
+});
 
 ipcMain.handle('dialog:openFile', async () => {
     console.debug("dialog open file")
