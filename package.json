@@ -6,20 +6,21 @@
   "scripts": {
     "build": "tsc",
     "start": "electron .",
-    "package": "npm run build && electron-builder",
-    "package-all-platforms": "npm run build && electron-builder --win --linux"
+    "package-win": "npm run build && electron-builder --win",
+    "package-linux": "npm run build && electron-builder --linux",
+    "purge": "rimraf release dist node_modules"
   },
   "build": {
     "appId": "com.example.psptool",
     "productName": "PSPTool",
     "files": [
       "dist/**/*",
+      "node_modules/**/*",
       "src/index.html",
-      "src/styles.css",
-      "node_modules/**/*"
+      "src/styles.css"
     ],
     "directories": {
-      "output": "release",
+      "output": "release/${os}",
       "buildResources": "assets"
     },
     "win": {
@@ -30,11 +31,11 @@
     }
   },
   "devDependencies": {
-    "@types/electron": "^X.X.X",
     "@types/node": "^X.X.X",
     "electron": "^X.X.X",
-    "electron-builder": "^25.1.8",
+    "electron-builder": "^X.X.X",
     "electron-reload": "^X.X.X",
+    "rimraf": "^X.X.X",
     "typescript": "^X.X.X"
   }
 }
