@@ -1,15 +1,39 @@
 {
-  "name": "my_electron_app",
+  "name": "psp_tool",
   "version": "1.0.0",
+  "description": "Cross-platform tool for psp filesystem manipulation",
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "electron ."
+    "start": "electron .",
+    "package": "npm run build && electron-builder",
+    "package-all-platforms": "npm run build && electron-builder --win --linux"
+  },
+  "build": {
+    "appId": "com.example.psptool",
+    "productName": "PSPTool",
+    "files": [
+      "dist/**/*",
+      "src/index.html",
+      "src/styles.css",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "output": "release",
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   },
   "devDependencies": {
     "@types/electron": "^X.X.X",
     "@types/node": "^X.X.X",
     "electron": "^X.X.X",
+    "electron-builder": "^25.1.8",
     "electron-reload": "^X.X.X",
     "typescript": "^X.X.X"
   }
