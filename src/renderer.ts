@@ -2,8 +2,8 @@ let directoryPath: string = '';
 let noFilesInDirectory: boolean = false;
 
 // buttons
-const btnSelectMemoryCardId = 'selectMemoryCardButton';
-const btnCreateFileStructureId = 'createFileStructureButton';
+const btnSelectMemoryCardId = 'btnSelectMemoryCard';
+const btnCreateFileStructureId = 'btnCreateFileStructure';
 const btnOpenThemesId = 'btnOpenThemes';
 const btnOpenGamesId = 'btnOpenGames';
 const btnOpenMusicId = 'btnOpenMusic';
@@ -15,6 +15,8 @@ const btnOpenSaveFilesId = 'btnOpenSaveFiles'
 const pathIndicatorId = 'pathIndicator';
 const createDirectoryIndicatorId = 'createDirectoryIndicator';
 
+// msgs
+const noMemoryCardSelectedMsg = 'No memory card selected';
 
 // event listeners
 document.getElementById(btnSelectMemoryCardId)!.addEventListener('click', async () => {
@@ -23,7 +25,7 @@ document.getElementById(btnSelectMemoryCardId)!.addEventListener('click', async 
     if (filePath) {
         await checkDirectoryIsEmpty(filePath);
     } else {
-        updatePathIndicatorMessage('No card selected');
+        updatePathIndicatorMessage(noMemoryCardSelectedMsg);
         updateDirectoryIndicatorMessage('', false); // Hide the indicator
     }
 });
@@ -31,7 +33,7 @@ document.getElementById(btnSelectMemoryCardId)!.addEventListener('click', async 
 document.getElementById(btnCreateFileStructureId)!.addEventListener('click', async () => {
     if (!directoryPath) {
         // Flash the path indicator if no directory was selected
-        alert("No memory card selected")
+        alert(noMemoryCardSelectedMsg)
         return;
     }
 
@@ -57,7 +59,7 @@ document.getElementById(btnCreateFileStructureId)!.addEventListener('click', asy
 document.getElementById(btnOpenThemesId)!.addEventListener('click', async () => {
     console.debug("Opening Themes...");
     if (!directoryPath) {
-        alert("No memory card selected");
+        alert(noMemoryCardSelectedMsg);
         return;
     }
     let opened = await window.electron.openTargetDirectory(directoryPath, 'themes');
@@ -69,7 +71,7 @@ document.getElementById(btnOpenThemesId)!.addEventListener('click', async () => 
 document.getElementById(btnOpenGamesId)!.addEventListener('click', async () => {
     console.debug("Opening Games...");
     if (!directoryPath) {
-        alert("No memory card selected");
+        alert(noMemoryCardSelectedMsg);
         return;
     }
     let opened = await window.electron.openTargetDirectory(directoryPath, "games");
@@ -81,7 +83,7 @@ document.getElementById(btnOpenGamesId)!.addEventListener('click', async () => {
 document.getElementById(btnOpenMusicId)!.addEventListener('click', async () => {
     console.debug("Opening Videos...");
     if (!directoryPath) {
-        alert("No memory card selected");
+        alert(noMemoryCardSelectedMsg);
         return;
     }
     let opened = await window.electron.openTargetDirectory(directoryPath, "music");
@@ -93,7 +95,7 @@ document.getElementById(btnOpenMusicId)!.addEventListener('click', async () => {
 document.getElementById(btnOpenVideoId)!.addEventListener('click', async () => {
     console.debug("Opening Videos...");
     if (!directoryPath) {
-        alert("No memory card selected");
+        alert(noMemoryCardSelectedMsg);
         return;
     }
     let opened = await window.electron.openTargetDirectory(directoryPath, 'videos');
@@ -105,7 +107,7 @@ document.getElementById(btnOpenVideoId)!.addEventListener('click', async () => {
 document.getElementById(btnOpenPicturesId)!.addEventListener('click', async () => {
     console.debug("Opening Pictures...");
     if (!directoryPath) {
-        alert("No memory card selected");
+        alert(noMemoryCardSelectedMsg);
         return;
     }
     let opened = await window.electron.openTargetDirectory(directoryPath, "pictures");
@@ -117,7 +119,7 @@ document.getElementById(btnOpenPicturesId)!.addEventListener('click', async () =
 document.getElementById(btnOpenSaveFilesId)!.addEventListener('click', async () => {
     console.debug("Opening Save Files...");
     if (!directoryPath) {
-        alert("No memory card selected");
+        alert(noMemoryCardSelectedMsg);
         return;
     }
     let opened = await window.electron.openTargetDirectory(directoryPath, 'saveFiles');
