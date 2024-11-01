@@ -68,3 +68,19 @@ _Develop a simple application window to verify the project setup and display an 
 
 - [ ] **Implement Folder Structure Creation - user interface**  
   _Develop basic user interface to automatically generate the basic PSP folder tree required for different file types._
+
+
+#### Build and test
+ 
+- npm install
+- npm run build
+- npm start
+
+#### Create executables
+
+- npm run package-linux
+- npm run package-win
+
+#### Remove all downloaded dependencies and generated files
+
+- npm run purge
