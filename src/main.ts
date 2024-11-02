@@ -1,8 +1,7 @@
-import {app, BrowserWindow, ipcMain, dialog, shell} from 'electron';
+import { app, BrowserWindow, ipcMain, dialog, shell, IpcMainInvokeEvent } from 'electron';
 import {promises as fs} from 'fs';
-import path from 'path';
+import * as path from 'path';
 import {FOLDER_STRUCTURE, folderMap, FolderName, MIN_HEIGHT, MIN_WIDTH} from "./constants";
-
 
 if (!app.requestSingleInstanceLock()) {
     console.debug("already running")
@@ -34,14 +33,6 @@ function createWindow() {
     });
 }
 
-app.on('second-instance', (event, commandLine, workingDirectory) => {
-    console.debug("Main - second instance")
-    if (mainWindow) {
-        if (mainWindow.isMinimized()) mainWindow.restore();
-        mainWindow.focus();
-    }
-});
-
 ipcMain.handle('dialog:openFile', async () => {
     console.debug("Main - dialog open file")
     const result = await dialog.showOpenDialog({
@@ -54,13 +45,13 @@ ipcMain.handle('dialog:openFile', async () => {
     return result.filePaths[0] || null;
 });
 
-ipcMain.handle('folder:create', async (_event, directoryPath: string) => {
+ipcMain.handle('folder:create', async (_event: IpcMainInvokeEvent, directoryPath: string) => {
     console.debug("Main - folder create")
     await createFolderStructure(directoryPath);
     return `Folder structure created at: ${directoryPath}`;
 });
 
-ipcMain.handle('folder:isEmpty', async (_event, directoryPath: string): Promise<boolean> => {
+ipcMain.handle('folder:isEmpty', async (_event: IpcMainInvokeEvent, directoryPath: string): Promise<boolean> => {
     console.debug("Main - folder is empty")
     try {
         const files = await fs.readdir(directoryPath);
@@ -73,7 +64,7 @@ ipcMain.handle('folder:isEmpty', async (_event, directoryPath: string): Promise<
 
 
 
-ipcMain.handle('dialog:openTargetDirectory', async (_event, directoryPath: string, targetFolder: FolderName) => {
+ipcMain.handle('dialog:openTargetDirectory', async (_event: IpcMainInvokeEvent, directoryPath: string, targetFolder: FolderName) => {
     console.debug("Main - open directory");
     try {
         const fullPath = path.join(directoryPath, folderMap[targetFolder]);

@@ -13,13 +13,16 @@
   "build": {
     "appId": "com.example.psptool",
     "productName": "PSPTool",
-    "compression": "maximum",
     "files": [
       "dist/**/*",
-      "node_modules/**/*",
       "src/index.html",
-      "src/styles.css"
+      "src/styles.css",
+      "!**/*.map",
+      "!**/*.ts",
+      "!**/*.d.ts",
+      "!**/*.spec.js"
     ],
+    "asar": true,
     "directories": {
       "output": "release/${os}",
       "buildResources": "assets"
@@ -34,6 +37,7 @@
   },
   "author": "https://github.com/m-remis",
   "devDependencies": {
+    "@types/electron": "1.6.12",
     "@types/node": "22.8.6",
     "electron": "33.0.2",
     "electron-builder": "25.1.8",
