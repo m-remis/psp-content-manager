@@ -12,6 +12,10 @@ body {
     height: 100vh;
     width: 100vw;
     position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 /* Background Container for Animated Circles */
@@ -178,4 +182,43 @@ body {
     white-space: nowrap; /* Prevent text wrapping */
     font-size: 1.2rem;
     margin-top: 2%;
+}
+
+.ocean {
+    height: 5%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #015871;
+}
+
+.wave {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x;
+    position: absolute;
+    width: 6400px;
+    top: -198px;
+    left: 0;
+    height: 198px;
+    transform: translate(0, 0);
+    animation: wave 7s ease infinite;
+}
+
+.wave:nth-of-type(2) {
+    top: -168px;
+    animation: swell 4s ease infinite;
+    opacity: 1;
+}
+
+@keyframes wave {
+    0% { margin-left: 0; }
+    100% { margin-left: -1600px;}
+}
+@keyframes swell {
+    0%, 100% {
+        transform: translate(0, -30px);
+    }
+    50% {
+        transform: translate(0, 5px);
+    }
 }

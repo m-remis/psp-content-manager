@@ -17,6 +17,7 @@
       "dist/**/*",
       "src/index.html",
       "src/styles.css",
+      "assets/**/*",
       "!**/*.map",
       "!**/*.ts",
       "!**/*.d.ts",

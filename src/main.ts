@@ -1,14 +1,22 @@
-import { app, BrowserWindow, ipcMain, dialog, shell, IpcMainInvokeEvent } from 'electron';
+import {app, BrowserWindow, ipcMain, dialog, shell, IpcMainInvokeEvent} from 'electron';
 import {promises as fs} from 'fs';
 import * as path from 'path';
 import {FOLDER_STRUCTURE, folderMap, FolderName, MIN_HEIGHT, MIN_WIDTH} from "./constants";
 
-if (!app.requestSingleInstanceLock()) {
-    console.debug("already running")
-    app.quit();
-}
-
 let mainWindow: BrowserWindow | null;
+
+if (!app.requestSingleInstanceLock()) {
+    console.debug("Another instance is already running");
+    app.quit();
+} else {
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+        console.debug("Second instance detected");
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) mainWindow.restore();
+            mainWindow.focus();
+        }
+    });
+}
 
 function createWindow() {
     console.debug("create window")
@@ -62,7 +70,40 @@ ipcMain.handle('folder:isEmpty', async (_event: IpcMainInvokeEvent, directoryPat
     }
 });
 
+ipcMain.handle('dialog:transferUpdate', async (_event: IpcMainInvokeEvent, directoryPath: string): Promise<string> => {
+    console.debug("Main - select and copy update file");
 
+    const result = await dialog.showOpenDialog({
+        properties: ['openFile'],
+        filters: [
+            { name: 'PBP Files', extensions: ['pbp'] },
+        ],
+    });
+
+    if (result.canceled) {
+        console.debug("File selection was canceled");
+        return "Cancelled";
+    }
+
+    const selectedFilePath = result.filePaths[0];
+    console.debug(`Selected file: ${selectedFilePath}`);
+
+    const destinationDir = path.join(directoryPath, 'PSP', 'GAME', 'UPDATE');
+    const destinationFilePath = path.join(destinationDir, 'EBOOT.PBP');
+
+    try {
+        // Ensure the destination directory exists
+        await fs.mkdir(destinationDir, { recursive: true });
+
+        // Copy the selected file to the destination with the new name
+        await fs.copyFile(selectedFilePath, destinationFilePath);
+        console.debug(`File copied to: ${destinationFilePath}`);
+        return destinationFilePath;
+    } catch (error) {
+        console.error('Error copying file:', error);
+        return "Failed to copy file";
+    }
+});
 
 ipcMain.handle('dialog:openTargetDirectory', async (_event: IpcMainInvokeEvent, directoryPath: string, targetFolder: FolderName) => {
     console.debug("Main - open directory");

@@ -6,4 +6,5 @@ contextBridge.exposeInMainWorld('electron',
         isTargetEmpty: (directoryPath: string) => ipcRenderer.invoke('folder:isEmpty', directoryPath),
         createFolder: (directoryPath: string) => ipcRenderer.invoke('folder:create', directoryPath),
         openTargetDirectory: (directoryPath: string, folderName: string) => ipcRenderer.invoke('dialog:openTargetDirectory', directoryPath, folderName),
+        transferUpdate: (directoryPath: string) => ipcRenderer.invoke('dialog:transferUpdate', directoryPath)
     })

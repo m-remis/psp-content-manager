@@ -1,15 +1,21 @@
 let directoryPath: string = '';
 let noFilesInDirectory: boolean = false;
 
-// buttons
+// buttons main
 const btnSelectMemoryCardId = 'btnSelectMemoryCard';
 const btnCreateFileStructureId = 'btnCreateFileStructure';
+// buttons open folders
 const btnOpenThemesId = 'btnOpenThemes';
 const btnOpenGamesId = 'btnOpenGames';
 const btnOpenMusicId = 'btnOpenMusic';
 const btnOpenVideoId = 'btnOpenVideo';
 const btnOpenPicturesId = 'btnOpenPictures';
 const btnOpenSaveFilesId = 'btnOpenSaveFiles'
+// buttons functions
+const btnExtractArk4 = 'btnExtractArk4';
+const btnTransferOfw = 'btnTransferOfw';
+const btnCreatePlaylist = 'btnCreatePlaylist';
+const btnOrganizeGames = 'btnOrganizeGames';
 
 // indicator text
 const pathIndicatorId = 'pathIndicator';
@@ -126,6 +132,17 @@ document.getElementById(btnOpenSaveFilesId)!.addEventListener('click', async () 
     if (!opened) {
         alert("Could not find target folder");
     }
+});
+
+document.getElementById(btnTransferOfw)!.addEventListener('click', async () => {
+    console.debug("Transfer ofw...");
+    if (!directoryPath) {
+        alert(noMemoryCardSelectedMsg);
+        return;
+    }
+
+    let transfered = await window.electron.transferUpdate(directoryPath);
+    alert(transfered);
 });
 
 // util functions
