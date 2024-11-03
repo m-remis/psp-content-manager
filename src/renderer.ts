@@ -17,6 +17,7 @@ const createDirectoryIndicatorId = 'createDirectoryIndicator';
 
 // msgs
 const noMemoryCardSelectedMsg = 'No memory card selected';
+const memoryCardNotEmptyMsg = 'Memory card is not empty';
 
 // event listeners
 document.getElementById(btnSelectMemoryCardId)!.addEventListener('click', async () => {
@@ -32,13 +33,12 @@ document.getElementById(btnSelectMemoryCardId)!.addEventListener('click', async 
 
 document.getElementById(btnCreateFileStructureId)!.addEventListener('click', async () => {
     if (!directoryPath) {
-        // Flash the path indicator if no directory was selected
         alert(noMemoryCardSelectedMsg)
         return;
     }
 
     if (!noFilesInDirectory) {
-        alert("Memory card is not empty !");
+        alert(memoryCardNotEmptyMsg);
         return;
     }
 

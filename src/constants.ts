@@ -35,4 +35,4 @@ export const folderMap: Record<FolderName, string> = {
 };
 
 export const MIN_WIDTH = 1200;
-export const MIN_HEIGHT = 600;
+export const MIN_HEIGHT = 690;

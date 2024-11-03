@@ -28,7 +28,9 @@
       "buildResources": "assets"
     },
     "win": {
-      "target": "nsis"
+      "target": "portable",
+      "icon": "assets/icon.ico",
+      "artifactName": "PSP_Tool.exe"
     },
     "linux": {
       "target": "AppImage",

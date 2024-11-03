@@ -21,7 +21,7 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    background: linear-gradient(to left, #504c4c, #030307);
+    background: linear-gradient(to left, #2c0845, #030307);
     overflow: hidden;
     z-index: -1; /* Background layer */
 }
@@ -137,30 +137,45 @@ body {
 
 /* Main Content Styling */
 
-button {
-    flex: 0 1 auto;
-    font-size: 1.2rem;
-    margin-top: 1%;
-    min-width: 20%; /* Fixed height for uniformity */
-    max-width: 35%; /* Fixed height for uniformity */
-    text-align: center; /* Center text within the button */
-}
-
-#pathIndicator {
+#pathIndicator, #createDirectoryIndicator {
     color: #ffffff;
     font-size: 1.2rem;
-    margin-left: 1%; /* Space between button and status text */
-    margin-top: 10%;
+    margin-left: 1%; /* Adjusted space between button and status text */
+    vertical-align: middle; /* Aligns the text vertically in line with button */
+    display: inline-block; /* Allow it to sit next to the button */
+    margin-top: 2%;
 }
 
 #createDirectoryIndicator {
-    color: #ffffff;
-    font-size: 1.2rem;
-    margin-left: 1%; /* Space between button and status text */
-    margin-top: 10%;
     visibility: hidden;
 }
 
-.folders {
-    margin-top: 5%;
+.button-container {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Align items vertically */
+}
+
+.flex-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: flex-start; /* Align items to the start */
+    margin-top: 20px; /* Add some space on top */
+}
+
+.section {
+    margin-right: 40px; /* Space between sections */
+    min-width: 20%; /* Set a minimum width for sections */
+}
+
+/* Remove margin from the last section */
+.section:last-child {
+    margin-right: 0;
+}
+
+.w3-button {
+    min-width: 250px; /* Minimum width to prevent too narrow buttons */
+    padding: 12px; /* Increase padding for better appearance */
+    text-align: left; /* Align text to the left */
+    white-space: nowrap; /* Prevent text wrapping */
+    font-size: 1.2rem;
+    margin-top: 2%;
 }
