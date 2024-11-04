@@ -43,11 +43,8 @@
     "@types/adm-zip": "0.5.6",
     "@types/electron": "1.6.12",
     "@types/node": "22.8.6",
-    "concurrently": "^9.1.0",
-    "cross-env": "^7.0.3",
     "electron": "33.0.2",
     "electron-builder": "25.1.8",
-    "electron-reload": "^2.0.0-alpha.1",
     "rimraf": "6.0.1",
     "typescript": "5.6.3"
   },
