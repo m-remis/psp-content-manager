@@ -139,51 +139,7 @@ body {
     }
 }
 
-/* Main Content Styling */
-
-#pathIndicator, #createDirectoryIndicator {
-    color: #ffffff;
-    font-size: 1.2rem;
-    margin-left: 1%; /* Adjusted space between button and status text */
-    vertical-align: middle; /* Aligns the text vertically in line with button */
-    display: inline-block; /* Allow it to sit next to the button */
-    margin-top: 2%;
-}
-
-#createDirectoryIndicator {
-    visibility: hidden;
-}
-
-.button-container {
-    display: flex; /* Use flexbox for alignment */
-    align-items: center; /* Align items vertically */
-}
-
-.flex-container {
-    display: flex; /* Use flexbox for layout */
-    justify-content: flex-start; /* Align items to the start */
-    margin-top: 20px; /* Add some space on top */
-}
-
-.section {
-    margin-right: 40px; /* Space between sections */
-    min-width: 20%; /* Set a minimum width for sections */
-}
-
-/* Remove margin from the last section */
-.section:last-child {
-    margin-right: 0;
-}
-
-.w3-button {
-    min-width: 250px; /* Minimum width to prevent too narrow buttons */
-    padding: 12px; /* Increase padding for better appearance */
-    text-align: left; /* Align text to the left */
-    white-space: nowrap; /* Prevent text wrapping */
-    font-size: 1.2rem;
-    margin-top: 2%;
-}
-
+/* Waves */
 .ocean {
     height: 5%;
     width: 100%;
@@ -194,7 +150,7 @@ body {
 }
 
 .wave {
-    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x;
+    background: url(../assets/wave.svg) repeat-x;
     position: absolute;
     width: 6400px;
     top: -198px;
@@ -211,9 +167,14 @@ body {
 }
 
 @keyframes wave {
-    0% { margin-left: 0; }
-    100% { margin-left: -1600px;}
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: -1600px;
+    }
 }
+
 @keyframes swell {
     0%, 100% {
         transform: translate(0, -30px);
@@ -221,4 +182,86 @@ body {
     50% {
         transform: translate(0, 5px);
     }
+}
+
+/* Main Content Styling */
+#pathIndicator {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin-left: 1%; /* Adjusted space between button and status text */
+    margin-top: 2%;
+}
+
+.button-container {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Align items vertically */
+}
+
+.flex-container {
+    display: flex; /* Use flexbox for layout */
+    margin-top: 20px;
+}
+
+.section {
+    margin-right: 40px; /* Space between sections */
+    min-width: 20%; /* Set a minimum width for sections */
+}
+
+/* Remove margin from the last section */
+.section:last-child {
+    margin-right: 0;
+}
+
+.w3-button {
+    min-width: 250px;
+    padding: 12px;
+    text-align: left;
+    white-space: nowrap;
+    font-size: 1.2rem;
+    margin-top: 2%;
+}
+
+/* Style the tab buttons */
+.tab-buttons {
+    display: flex;
+    cursor: pointer;
+    margin-top: 5%;
+}
+
+.tab-buttons div {
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #f6d9b6;
+    border: 1px none #ffffff;
+    border-bottom-style: solid;
+    width: 20%;
+}
+
+.tab-buttons div:last-child .active {
+    border-right: 1px solid #ffffff;
+}
+/* Highlight active tab */
+.tab-buttons .active {
+    border: 1px solid #ffffff;
+    border-bottom: transparent;
+    color: #ffa400;
+    background: linear-gradient(to bottom, #030303, transparent)
+}
+
+/* Hide all tab content by default */
+.tabcontent {
+    display: none;
+}
+
+.w3-border-top {
+    margin-left: 40%;
+    margin-top: -1px;
+}
+
+.button-container {
+    margin-top: 1%;
+}
+
+#brnOpenCardDir {
+    visibility: hidden;
 }

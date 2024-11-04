@@ -1,158 +1,220 @@
-import {app, BrowserWindow, ipcMain, dialog, shell, IpcMainInvokeEvent} from 'electron';
+import {app, BrowserWindow, ipcMain, dialog, shell, Menu} from 'electron';
 import {promises as fs} from 'fs';
 import * as path from 'path';
-import {FOLDER_STRUCTURE, folderMap, FolderName, MIN_HEIGHT, MIN_WIDTH} from "./constants";
+import AdmZip from 'adm-zip';
+import {FOLDER_STRUCTURE, folderMap, FolderName, MIN_HEIGHT, MIN_WIDTH} from './constants';
+import {MENU_CONTENT} from "./windowMenu";
 
 let mainWindow: BrowserWindow | null;
 
 if (!app.requestSingleInstanceLock()) {
-    console.debug("Another instance is already running");
+    console.debug("Main - Another instance is already running");
     app.quit();
 } else {
-    app.on('second-instance', (event, commandLine, workingDirectory) => {
-        console.debug("Second instance detected");
-        if (mainWindow) {
-            if (mainWindow.isMinimized()) mainWindow.restore();
-            mainWindow.focus();
-        }
-    });
+    app.on('second-instance', () => handleSecondInstance());
+    app.on('window-all-closed', handleAllWindowsClosed);
+    app.on('activate', handleAppActivate);
+    app.whenReady().then(createMainWindow);
 }
 
-function createWindow() {
-    console.debug("create window")
+function createMainWindow() {
     mainWindow = new BrowserWindow({
         width: MIN_WIDTH,
         height: MIN_HEIGHT,
         minWidth: MIN_WIDTH,
         minHeight: MIN_HEIGHT,
+        resizable: true,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
             preload: path.join(__dirname, '../dist/preload.js')
-        },
+        }
     });
 
-    mainWindow.setMenu(null);
+    Menu.setApplicationMenu(Menu.buildFromTemplate(MENU_CONTENT));
     mainWindow.loadFile(path.join(__dirname, '../src/index.html'));
-
-    // Handle the close event
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
 }
 
-ipcMain.handle('dialog:openFile', async () => {
-    console.debug("Main - dialog open file")
-    const result = await dialog.showOpenDialog({
-        properties: ['openDirectory'], // Changed to openDirectory for USB drives
-        filters: [
-            {name: 'All Files', extensions: ['*']},
-        ],
-    });
-
-    return result.filePaths[0] || null;
-});
-
-ipcMain.handle('folder:create', async (_event: IpcMainInvokeEvent, directoryPath: string) => {
-    console.debug("Main - folder create")
-    await createFolderStructure(directoryPath);
-    return `Folder structure created at: ${directoryPath}`;
-});
-
-ipcMain.handle('folder:isEmpty', async (_event: IpcMainInvokeEvent, directoryPath: string): Promise<boolean> => {
-    console.debug("Main - folder is empty")
-    try {
-        const files = await fs.readdir(directoryPath);
-        return files.length === 0; // Returns true if empty, false if not
-    } catch (error) {
-        console.debug('Error checking if directory is empty:', error);
-        throw new Error('Could not check directory contents.');
-    }
-});
-
-ipcMain.handle('dialog:transferUpdate', async (_event: IpcMainInvokeEvent, directoryPath: string): Promise<string> => {
-    console.debug("Main - select and copy update file");
-
-    const result = await dialog.showOpenDialog({
-        properties: ['openFile'],
-        filters: [
-            { name: 'PBP Files', extensions: ['pbp'] },
-        ],
-    });
-
-    if (result.canceled) {
-        console.debug("File selection was canceled");
-        return "Cancelled";
-    }
-
-    const selectedFilePath = result.filePaths[0];
-    console.debug(`Selected file: ${selectedFilePath}`);
-
-    const destinationDir = path.join(directoryPath, 'PSP', 'GAME', 'UPDATE');
-    const destinationFilePath = path.join(destinationDir, 'EBOOT.PBP');
-
-    try {
-        // Ensure the destination directory exists
-        await fs.mkdir(destinationDir, { recursive: true });
-
-        // Copy the selected file to the destination with the new name
-        await fs.copyFile(selectedFilePath, destinationFilePath);
-        console.debug(`File copied to: ${destinationFilePath}`);
-        return destinationFilePath;
-    } catch (error) {
-        console.error('Error copying file:', error);
-        return "Failed to copy file";
-    }
-});
-
-ipcMain.handle('dialog:openTargetDirectory', async (_event: IpcMainInvokeEvent, directoryPath: string, targetFolder: FolderName) => {
-    console.debug("Main - open directory");
-    try {
-        const fullPath = path.join(directoryPath, folderMap[targetFolder]);
-        console.debug(`Opening directory at: ${fullPath}`);
-
-        // Check if the directory exists
-        try {
-            await fs.stat(fullPath);
-        } catch (statError) {
-            console.error('Directory does not exist:', fullPath);
-            return false; // Directory does not exist
-        }
-
-        await shell.openPath(fullPath);
-        return true; // Indicate success
-    } catch (error) {
-        console.error('Error opening directory:', error);
-        return false; // Indicate failure
-    }
-});
-
-async function createFolderStructure(basePath: string) {
-    console.debug("Main - create folder structure")
-    try {
-        for (const folder of FOLDER_STRUCTURE) {
-            const folderPath = path.join(basePath, folder);
-            await fs.mkdir(folderPath, {recursive: true});
-        }
-        console.debug('Folder structure created successfully.');
-    } catch (error) {
-        console.error('Error creating folder structure:', error);
-        throw new Error('Failed to create folder structure');
+function handleSecondInstance() {
+    console.debug("Main - Second instance detected");
+    if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore();
+        mainWindow.focus();
     }
 }
 
-app.whenReady().then(createWindow);
+function handleAllWindowsClosed() {
+    console.debug("Main - Closing all windows");
+    if (process.platform !== 'darwin') app.quit();
+}
 
-app.on('window-all-closed', () => {
-    console.debug("closing all windows")
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
-});
+function handleAppActivate() {
+    console.debug("Main - Activate");
+    if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
+}
 
-app.on('activate', () => {
-    console.debug("activate")
-    if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow();
+ipcMain.handle('dialog:openFile', handleDialogOpenFile);
+ipcMain.handle('folder:create', handleCreateFolder);
+ipcMain.handle('folder:isEmpty', handleIsFolderEmpty);
+ipcMain.handle('dialog:transferUpdate', handleTransferUpdate);
+ipcMain.handle('dialog:openTargetDirectory', handleOpenTargetDirectory);
+ipcMain.handle('dialog:openRootDirectory', handleOpenRootDirectory);
+ipcMain.handle('dialog:extractArk4', handleExtractArk4);
+ipcMain.handle('dialog:extractChronoswitch', handleExtractChronoswitch);
+
+async function handleDialogOpenFile() {
+    try {
+        const result = await dialog.showOpenDialog({
+            properties: ['openDirectory'],
+            filters: [{name: 'All Files', extensions: ['*']}]
+        });
+        return result.filePaths[0] || null;
+    } catch (error) {
+        console.error("Error opening file dialog:", error);
+        return null;
     }
-});
+}
+
+async function handleCreateFolder(_event: any, directoryPath: string) {
+    try {
+        await createFolderStructure(directoryPath);
+        return `Folder structure created at: ${directoryPath}`;
+    } catch (error) {
+        console.error("Error creating folder structure:", error);
+        return "Failed to create folder structure";
+    }
+}
+
+async function handleIsFolderEmpty(_event: any, directoryPath: string): Promise<boolean> {
+    try {
+        const files = await fs.readdir(directoryPath);
+        return files.length === 0;
+    } catch (error) {
+        console.error("Error checking if directory is empty:", error);
+        throw new Error('Could not check directory contents.');
+    }
+}
+
+async function handleTransferUpdate(_event: any, directoryPath: string) {
+    try {
+        const result = await dialog.showOpenDialog({
+            properties: ['openFile'],
+            filters: [{name: 'PBP Files', extensions: ['pbp']}]
+        });
+        if (result.canceled) return "Cancelled";
+
+        const selectedFilePath = result.filePaths[0];
+        const destinationPath = path.join(directoryPath, folderMap["update"], 'EBOOT.PBP');
+
+        await fs.mkdir(path.dirname(destinationPath), {recursive: true});
+        await fs.copyFile(selectedFilePath, destinationPath);
+        return "Transferred";
+    } catch (error) {
+        console.error("Error transferring update file:", error);
+        return "Failed to copy file";
+    }
+}
+
+async function handleOpenTargetDirectory(_event: any, directoryPath: string, targetFolder: FolderName) {
+    try {
+        const fullPath = path.join(directoryPath, folderMap[targetFolder]);
+        await fs.stat(fullPath);
+        await shell.openPath(fullPath);
+        return true;
+    } catch (error) {
+        console.error("Error opening directory:", error);
+        return false;
+    }
+}
+
+async function handleOpenRootDirectory(_event: any, directoryPath: string) {
+    try {
+        const fullPath = path.join(directoryPath);
+        await fs.stat(fullPath);
+        await shell.openPath(fullPath);
+        return true;
+    } catch (error) {
+        console.error("Error opening root directory:", error);
+        return false;
+    }
+}
+
+async function handleExtractArk4(_event: any, directoryPath: string) {
+    try {
+        const result = await dialog.showOpenDialog({
+            properties: ['openFile'],
+            filters: [{name: 'ZIP Files', extensions: ['zip']}]
+        });
+        if (result.canceled) return "Cancelled";
+
+        const selectedFilePath = result.filePaths[0];
+        if (path.basename(selectedFilePath) !== 'ARK4.zip') return "Invalid file selected. Please select 'ARK4.zip'.";
+
+        const zip = new AdmZip(selectedFilePath);
+        await extractArkFolders(zip, directoryPath);
+        return "Extracted";
+    } catch (error) {
+        console.error("Error extracting ARK4.zip:", error);
+        return "Failed to extract folders.";
+    }
+}
+
+async function handleExtractChronoswitch(_event: any, directoryPath: string) {
+    try {
+        const result = await dialog.showOpenDialog({
+            properties: ['openFile'],
+            filters: [{name: 'ZIP Files', extensions: ['zip']}]
+        });
+        if (result.canceled) return "Cancelled";
+
+        const selectedFilePath = result.filePaths[0];
+        if (!/^ChronoSwitch_v[\d.]+\.zip$/.test(path.basename(selectedFilePath))) {
+            return "Invalid file selected. Please select a file named 'ChronoSwitch_vX.X.zip'.";
+        }
+
+        const zip = new AdmZip(selectedFilePath);
+        await extractChronoswitchFolders(zip, directoryPath);
+        return "Extracted";
+    } catch (error) {
+        console.error("Error extracting ChronoSwitch_vX.X.zip", error);
+        return "Failed to extract folders.";
+    }
+}
+
+async function createFolderStructure(basePath: string) {
+    console.debug("Main - Creating folder structure as needed");
+    try {
+        for (const folder of FOLDER_STRUCTURE) {
+            const folderPath = path.join(basePath, folder);
+
+            try {
+                await fs.access(folderPath);
+                console.debug(`Main - Directory already exists: ${folderPath}`);
+            } catch {
+                await fs.mkdir(folderPath, {recursive: true});
+                console.debug(`Main - Created missing directory: ${folderPath}`);
+            }
+        }
+        console.debug('Main - Folder structure checked and missing folders created successfully.');
+    } catch (error) {
+        console.error('Main - Error while creating folder structure:', error);
+        throw new Error('Failed to ensure folder structure.');
+    }
+}
+
+async function extractArkFolders(zip: AdmZip, directoryPath: string) {
+    await fs.mkdir(path.join(directoryPath, folderMap["saveFiles"]), {recursive: true});
+    await fs.mkdir(path.join(directoryPath, folderMap["psp_game"]), {recursive: true});
+    zip.extractEntryTo('ARK_01234/', path.join(directoryPath, folderMap["saveFiles"]), true, true);
+    zip.extractEntryTo('ARK_Loader/', path.join(directoryPath, folderMap["psp_game"]), true, true);
+}
+
+async function extractChronoswitchFolders(zip: AdmZip, directoryPath: string) {
+    await fs.mkdir(path.join(directoryPath, 'PSP', 'GAME', 'Chronoswitch'), {recursive: true});
+    const sourcePath = 'PSP/GAME/ChronoSwitch/';
+    const destinationPath = path.join(directoryPath, folderMap["psp_game"], 'Chronoswitch');
+    zip.extractEntryTo(sourcePath, destinationPath, false, true);
+}
