@@ -12,6 +12,10 @@ body {
     height: 100vh;
     width: 100vw;
     position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 /* Background Container for Animated Circles */
@@ -21,7 +25,7 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    background: linear-gradient(to left, #504c4c, #030307);
+    background: linear-gradient(to left, #2c0845, #030307);
     overflow: hidden;
     z-index: -1; /* Background layer */
 }
@@ -48,49 +52,216 @@ body {
 }
 
 /* Custom Circle Sizes and Animations */
-.circles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
-.circles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
-.circles li:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
-.circles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
-.circles li:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
-.circles li:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
-.circles li:nth-child(7) { left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
-.circles li:nth-child(8) { left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
-.circles li:nth-child(9) { left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; }
-.circles li:nth-child(10) { left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
+.circles li:nth-child(1) {
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(2) {
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3) {
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4) {
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5) {
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6) {
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7) {
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8) {
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9) {
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10) {
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
 
 /* Circle Animation */
 @keyframes animate {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Waves */
+.ocean {
+    height: 5%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #015871;
+}
+
+.wave {
+    background: url(../assets/wave.svg) repeat-x;
+    position: absolute;
+    width: 6400px;
+    top: -198px;
+    left: 0;
+    height: 198px;
+    transform: translate(0, 0);
+    animation: wave 7s ease infinite;
+}
+
+.wave:nth-of-type(2) {
+    top: -168px;
+    animation: swell 4s ease infinite;
+    opacity: 1;
+}
+
+@keyframes wave {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: -1600px;
+    }
+}
+
+@keyframes swell {
+    0%, 100% {
+        transform: translate(0, -30px);
+    }
+    50% {
+        transform: translate(0, 5px);
+    }
 }
 
 /* Main Content Styling */
-
-button {
-    flex: 0 1 auto;
-    font-size: 1.2rem;
-    margin-top: 1%;
-    min-width: 20%; /* Fixed height for uniformity */
-    max-width: 35%; /* Fixed height for uniformity */
-    text-align: center; /* Center text within the button */
-}
-
 #pathIndicator {
     color: #ffffff;
     font-size: 1.2rem;
-    margin-left: 1%; /* Space between button and status text */
-    margin-top: 10%;
+    margin-left: 1%; /* Adjusted space between button and status text */
+    margin-top: 2%;
 }
 
-#createDirectoryIndicator {
-    color: #ffffff;
+.button-container {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Align items vertically */
+}
+
+.flex-container {
+    display: flex; /* Use flexbox for layout */
+    margin-top: 20px;
+}
+
+.section {
+    margin-right: 40px; /* Space between sections */
+    min-width: 20%; /* Set a minimum width for sections */
+}
+
+/* Remove margin from the last section */
+.section:last-child {
+    margin-right: 0;
+}
+
+.w3-button {
+    min-width: 250px;
+    padding: 12px;
+    text-align: left;
+    white-space: nowrap;
     font-size: 1.2rem;
-    margin-left: 1%; /* Space between button and status text */
-    margin-top: 10%;
-    visibility: hidden;
+    margin-top: 2%;
 }
 
-.folders {
-    margin-top: 10%;
+/* Style the tab buttons */
+.tab-buttons {
+    display: flex;
+    cursor: pointer;
+    margin-top: 5%;
+}
+
+.tab-buttons div {
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #f6d9b6;
+    border: 1px none #ffffff;
+    border-bottom-style: solid;
+    width: 20%;
+}
+
+.tab-buttons div:last-child .active {
+    border-right: 1px solid #ffffff;
+}
+/* Highlight active tab */
+.tab-buttons .active {
+    border: 1px solid #ffffff;
+    border-bottom: transparent;
+    color: #ffa400;
+    background: linear-gradient(to bottom, #030303, transparent)
+}
+
+/* Hide all tab content by default */
+.tabcontent {
+    display: none;
+}
+
+.w3-border-top {
+    margin-left: 40%;
+    margin-top: -1px;
+}
+
+.button-container {
+    margin-top: 1%;
+}
+
+#brnOpenCardDir {
+    visibility: hidden;
 }

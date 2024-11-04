@@ -1,31 +1,37 @@
 {
-  "name": "psp_tool",
+  "name": "psp_content_manager",
   "version": "1.0.0",
   "description": "Cross-platform tool for psp filesystem manipulation",
   "main": "dist/main.js",
   "scripts": {
-    "build": "tsc",
-    "start": "electron .",
-    "package-win": "npm run build && electron-builder --win",
-    "package-linux": "npm run build && electron-builder --linux",
-    "purge": "rimraf release dist node_modules"
+    "build": "echo \"Building TypeScript project...\" && tsc",
+    "start": "npm run build && echo \"Starting Electron...\" && electron .",
+    "package-win": "echo \"Packaging for Windows...\" && npm run build && electron-builder --win",
+    "package-linux": "echo \"Packaging for Linux...\" && npm run build && electron-builder --linux",
+    "purge": "echo \"Cleaning up...\" && rimraf release dist node_modules"
   },
   "build": {
-    "appId": "com.example.psptool",
-    "productName": "PSPTool",
-    "compression": "maximum",
+    "appId": "com.example.pspcm",
+    "productName": "PSP_CN",
     "files": [
       "dist/**/*",
-      "node_modules/**/*",
       "src/index.html",
-      "src/styles.css"
+      "src/styles.css",
+      "assets/**/*",
+      "!**/*.map",
+      "!**/*.ts",
+      "!**/*.d.ts",
+      "!**/*.spec.js"
     ],
+    "asar": true,
     "directories": {
       "output": "release/${os}",
       "buildResources": "assets"
     },
     "win": {
-      "target": "nsis"
+      "target": "portable",
+      "icon": "assets/icon.ico",
+      "artifactName": "PSP_CM.exe"
     },
     "linux": {
       "target": "AppImage",
@@ -34,10 +40,19 @@
   },
   "author": "https://github.com/m-remis",
   "devDependencies": {
+    "@types/adm-zip": "0.5.6",
+    "@types/electron": "1.6.12",
     "@types/node": "22.8.6",
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
     "electron": "33.0.2",
     "electron-builder": "25.1.8",
+    "electron-reload": "^2.0.0-alpha.1",
     "rimraf": "6.0.1",
     "typescript": "5.6.3"
+  },
+  "dependencies": {
+    "adm-zip": "0.5.16",
+    "fs-extra": "11.2.0"
   }
 }

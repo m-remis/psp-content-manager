@@ -6,7 +6,7 @@ export const FOLDER_STRUCTURE = [
     'VIDEO',
     'seplugins',
     'ISO/VIDEO',
-    'PSP/GAME661', //todo fix this
+    'PSP/GAME661',
     'PSP/GAME150',
     'PSP/COMMON',
     'PSP/GAME',
@@ -21,10 +21,17 @@ export const FOLDER_STRUCTURE = [
     'PSP/GAME/RECOVERY'
 ];
 
-// Define a type for folder names
-export type FolderName = 'themes' | 'music' | 'pictures' | 'videos' | 'games' | 'saveFiles';
+export type FolderName =
+    'themes'
+    | 'music'
+    | 'pictures'
+    | 'videos'
+    | 'games'
+    | 'saveFiles'
+    | 'plugins'
+    | 'update'
+    | 'psp_game';
 
-// Folder mapping
 export const folderMap: Record<FolderName, string> = {
     themes: "PSP/THEME",
     music: "MUSIC",
@@ -32,7 +39,10 @@ export const folderMap: Record<FolderName, string> = {
     videos: "VIDEO",
     games: "ISO",
     saveFiles: "PSP/SAVEDATA",
+    plugins: "seplugins",
+    update: "PSP/GAME/UPDATE",
+    psp_game : "PSP/GAME"
 };
 
-export const MIN_WIDTH = 1200;
+export const MIN_WIDTH = 1100;
 export const MIN_HEIGHT = 600;
