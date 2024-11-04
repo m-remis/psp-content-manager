@@ -240,6 +240,7 @@ body {
 .tab-buttons div:last-child .active {
     border-right: 1px solid #ffffff;
 }
+
 /* Highlight active tab */
 .tab-buttons .active {
     border: 1px solid #ffffff;
