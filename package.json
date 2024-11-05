@@ -6,32 +6,35 @@
   "scripts": {
     "build": "echo \"Building TypeScript project...\" && tsc",
     "start": "npm run build && echo \"Starting Electron...\" && electron .",
-    "package-win": "echo \"Packaging for Windows...\" && npm run build && electron-builder --win",
-    "package-linux": "echo \"Packaging for Linux...\" && npm run build && electron-builder --linux",
-    "purge": "echo \"Cleaning up...\" && rimraf release dist node_modules"
+    "package-win": "echo \"Packaging for Windows...\" && npm run build && electron-builder --win --x64",
+    "purge": "echo \"Cleaning up...\" && rimraf release dist node_modules",
+    "modclean": "modclean --run"
   },
   "build": {
-    "appId": "com.example.pspcm",
-    "productName": "PSP_CN",
+    "appId": "com.github.m-remis.pspcm",
+    "productName": "PSP_CM",
     "files": [
       "dist/**/*",
       "src/index.html",
       "src/styles.css",
       "assets/**/*",
       "!**/*.map",
+      "!node_modules/**/*",
       "!**/*.ts",
       "!**/*.d.ts",
-      "!**/*.spec.js"
+      "!**/*.spec.js",
+      "!docs/**/*"
     ],
-    "asar": true,
+    "compression": "maximum",
     "directories": {
       "output": "release/${os}",
       "buildResources": "assets"
     },
     "win": {
-      "target": "portable",
+      "target": "zip",
+      "asar": true,
       "icon": "assets/icon.ico",
-      "artifactName": "PSP_CM.exe"
+      "artifactName": "PSP_CM-${version}.zip"
     },
     "linux": {
       "target": "AppImage",
@@ -39,12 +42,14 @@
     }
   },
   "author": "https://github.com/m-remis",
+  "license": "MIT",
   "devDependencies": {
     "@types/adm-zip": "0.5.6",
     "@types/electron": "1.6.12",
     "@types/node": "22.8.6",
     "electron": "33.0.2",
     "electron-builder": "25.1.8",
+    "modclean": "3.0.0-beta.1",
     "rimraf": "6.0.1",
     "typescript": "5.6.3"
   },
