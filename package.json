@@ -1,6 +1,6 @@
 {
   "name": "psp_cm",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Cross-platform tool for psp filesystem manipulation",
   "main": "dist/main.js",
   "scripts": {
@@ -19,22 +19,21 @@
       "src/styles.css",
       "assets/**/*",
       "!**/*.map",
-      "!node_modules/**/*",
       "!**/*.ts",
       "!**/*.d.ts",
       "!**/*.spec.js",
       "!docs/**/*"
     ],
-    "compression": "maximum",
+    "compression": "normal",
     "directories": {
       "output": "release/${os}",
       "buildResources": "assets"
     },
     "win": {
-      "target": "zip",
+      "target": "portable",
       "asar": true,
       "icon": "assets/icon.ico",
-      "artifactName": "PSP_CM-${version}.zip"
+      "artifactName": "PSP_CM-${version}.exe"
     },
     "linux": {
       "target": "AppImage",
