@@ -11,6 +11,8 @@
 - Folder structure creation: generation of the necessary directory tree for PSP files
 - Extraction of specific files to their target destinations, such as ARK4, Chronoswitch and official sw updates
 
+![Preview](docs/preview.gif)
+
 ### How to setup development environment
 
 #### Make sure to have installed
