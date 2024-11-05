@@ -28,7 +28,7 @@
 
         <!-- Tab content -->
         <div id="OpenFolder" class="tabcontent" style="display: block;">
-            <h3 class="w3-text-white">Navigate to PSP folder</h3>
+            <h3 class="w3-text-white">Open PSP folder</h3>
             <div class="buttons">
                 <button id="btnOpenThemes" class="w3-button w3-gray w3-ripple w3-round">Themes</button>
                 <button id="btnOpenGames" class="w3-button w3-gray w3-ripple w3-round">Games</button>
@@ -41,22 +41,14 @@
         </div>
 
         <div id="Functions" class="tabcontent">
-            <h3 class="w3-text-white">Select a function to perform</h3>
+            <h3 class="w3-text-white">Perform function</h3>
             <div class="buttons">
                 <button id="btnExtractArk4" class="w3-button w3-deep-purple w3-ripple w3-round">Extract ARK4</button>
-                <button id="btnExtractChronoswitch" class="w3-button w3-deep-purple w3-ripple w3-round">Extract
-                    Chronoswitch
-                </button>
-                <button id="btnTransferOfw" class="w3-button w3-deep-purple w3-ripple w3-round">Transfer OFW update
-                </button>
-                <button id="btnCreatePlaylist" class="w3-button w3-deep-purple w3-ripple w3-round">Create music
-                    playlist
-                </button>
-                <button id="btnOrganizeGames" class="w3-button w3-deep-purple w3-ripple w3-round">Organize games
-                </button>
-                <button id="btnCreateFileStructure" class="w3-button w3-orange w3-ripple w3-round">Create missing
-                    folders
-                </button>
+                <button id="btnExtractChronoswitch" class="w3-button w3-deep-purple w3-ripple w3-round">Extract Chronoswitch</button>
+                <button id="btnTransferOfw" class="w3-button w3-deep-purple w3-ripple w3-round">Transfer OFW update</button>
+                <button id="btnCreateFileStructure" class="w3-button w3-orange w3-ripple w3-round">Create missing folders</button>
+                <button id="btnCreatePlaylist" class="w3-button w3-deep-purple w3-ripple w3-round">Create music playlist</button>
+                <button id="btnOrganizeGames" class="w3-button w3-deep-purple w3-ripple w3-round">Organize games</button>
             </div>
         </div>
     </div>
@@ -83,6 +75,7 @@
 </div>
 
 <script>
+    // small tabs
     function openTab(evt, tabName) {
         const tabcontent = document.querySelectorAll(".tabcontent");
         tabcontent.forEach(tab => tab.style.display = "none");
