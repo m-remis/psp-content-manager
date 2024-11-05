@@ -1,4 +1,4 @@
-import {app, BrowserWindow, ipcMain, dialog, shell, Menu} from 'electron';
+import {app, BrowserWindow, dialog, ipcMain, Menu, shell} from 'electron';
 import {promises as fs} from 'fs';
 import * as path from 'path';
 import AdmZip from 'adm-zip';
