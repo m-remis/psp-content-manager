@@ -2,7 +2,7 @@ import {app, BrowserWindow, dialog, ipcMain, Menu, shell} from 'electron';
 import {promises as fs} from 'fs';
 import * as path from 'path';
 import AdmZip from 'adm-zip';
-import {FOLDER_STRUCTURE, folderMap, FolderName, MIN_HEIGHT, MIN_WIDTH} from './constants';
+import {ARK4_type, FOLDER_STRUCTURE, folderMap, FolderName, MIN_HEIGHT, MIN_WIDTH} from './constants';
 import {MENU_CONTENT} from "./windowMenu";
 
 let mainWindow: BrowserWindow | null;
@@ -142,7 +142,7 @@ async function handleOpenRootDirectory(_event: any, directoryPath: string) {
     }
 }
 
-async function handleExtractArk4(_event: any, directoryPath: string) {
+async function handleExtractArk4(_event: any, directoryPath: string, type: ARK4_type) {
     try {
         const result = await dialog.showOpenDialog({
             properties: ['openFile'],
@@ -154,7 +154,7 @@ async function handleExtractArk4(_event: any, directoryPath: string) {
         if (path.basename(selectedFilePath) !== 'ARK4.zip') return "Invalid file selected. Please select 'ARK4.zip'.";
 
         const zip = new AdmZip(selectedFilePath);
-        await extractArkFolders(zip, directoryPath);
+        await extractArkFolders(zip, directoryPath, type);
         return "Extracted";
     } catch (error) {
         console.error("Error extracting ARK4.zip:", error);
@@ -205,11 +205,26 @@ async function createFolderStructure(basePath: string) {
     }
 }
 
-async function extractArkFolders(zip: AdmZip, directoryPath: string) {
-    await fs.mkdir(path.join(directoryPath, folderMap["saveFiles"]), {recursive: true});
+async function extractArkFolders(zip: AdmZip, directoryPath: string, type: ARK4_type) {
+    console.debug(`Extracting ARK4 type: ${type}`)
     await fs.mkdir(path.join(directoryPath, folderMap["psp_game"]), {recursive: true});
-    zip.extractEntryTo('ARK_01234/', path.join(directoryPath, folderMap["saveFiles"]), true, true);
-    zip.extractEntryTo('ARK_Loader/', path.join(directoryPath, folderMap["psp_game"]), true, true);
+    if (type === "temp") {
+        await fs.mkdir(path.join(directoryPath, folderMap["saveFiles"]), {recursive: true});
+        zip.extractEntryTo('ARK_01234/', path.join(directoryPath, folderMap["saveFiles"]), true, true);
+        zip.extractEntryTo('ARK_Loader/', path.join(directoryPath, folderMap["psp_game"]), true, true);
+        return;
+    }
+    if (type === "cIPL") {
+        zip.extractEntryTo('PSP/ARK_cIPL/', path.join(directoryPath, folderMap["psp_game"], "ARK_cIPL"), false, true);
+        return;
+    }
+    if (type === "full") {
+        zip.extractEntryTo('PSP/ARK_Full_Installer/', path.join(directoryPath, folderMap["psp_game"], "ARK_Full_Installer"), false, true);
+        return;
+    }
+    if (type === "update") {
+        zip.extractEntryTo('UPDATE/', path.join(directoryPath, folderMap["psp_game"]), true, true);
+    }
 }
 
 async function extractChronoswitchFolders(zip: AdmZip, directoryPath: string) {

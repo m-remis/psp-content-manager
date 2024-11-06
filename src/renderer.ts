@@ -19,7 +19,10 @@ const buttonIds = {
         plugins: 'btnOpenPlugins',
     },
     functions: {
-        extractArk4: 'btnExtractArk4',
+        extractArk4Temp: 'btnExtractArk4Tmp',
+        extractArk4Cipl: 'btnExtractArk4Cipl',
+        extractArk4Full: 'btnExtractArk4Full',
+        extractArk4Update: 'btnExtractArk4Update',
         extractChronoswitch: 'btnExtractChronoswitch',
         transferOfw: 'btnTransferOfw',
         createPlaylist: 'btnCreatePlaylist',
@@ -39,7 +42,10 @@ const buttonActions = {
     [buttonIds.openFolders.pictures]: () => openTargetDirectory('pictures'),
     [buttonIds.openFolders.saveFiles]: () => openTargetDirectory('saveFiles'),
     [buttonIds.functions.transferOfw]: transferOfw,
-    [buttonIds.functions.extractArk4]: extractArk4,
+    [buttonIds.functions.extractArk4Temp]: () => extractArk4('temp'),
+    [buttonIds.functions.extractArk4Cipl]: () => extractArk4('cIPL'),
+    [buttonIds.functions.extractArk4Full]: () => extractArk4('full'),
+    [buttonIds.functions.extractArk4Update]: () => extractArk4('update'),
     [buttonIds.functions.extractChronoswitch]: extractChronoswitch,
     [buttonIds.functions.createPlaylist]: createNotImplementedAlert,
     [buttonIds.functions.organizeGames]: createNotImplementedAlert,
@@ -55,6 +61,7 @@ async function selectMemoryCard() {
         directoryPath = filePath;
         updatePathIndicatorMessage(`Selected: ${directoryPath}`);
         setElementVisibility(true, buttonIds.main.openCardDir);
+        setElementVisibility(true, buttonIds.main.createFileStructure);
     } else {
         updatePathIndicatorMessage(noMemoryCardSelectedMsg);
     }
@@ -113,13 +120,13 @@ async function transferOfw() {
     }
 }
 
-async function extractArk4() {
-    console.debug("Renderer - Extract ARK4...");
+async function extractArk4(type: string) {
+    console.debug(`Renderer - Extract ARK4- ${type}`, type);
     if (!directoryPath) {
         alert(noMemoryCardSelectedMsg);
         return;
     }
-    const extractResult = await window.electron.extractArk4(directoryPath);
+    const extractResult = await window.electron.extractArk4(directoryPath, type);
     if (extractResult !== "Cancelled") {
         alert(extractResult);
     }

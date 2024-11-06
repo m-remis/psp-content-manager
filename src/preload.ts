@@ -8,6 +8,6 @@ contextBridge.exposeInMainWorld('electron',
         openTargetDirectory: (directoryPath: string, folderName: string) => ipcRenderer.invoke('dialog:openTargetDirectory', directoryPath, folderName),
         openRootDirectory: (directoryPath: string) => ipcRenderer.invoke('dialog:openRootDirectory', directoryPath),
         transferUpdate: (directoryPath: string) => ipcRenderer.invoke('dialog:transferUpdate', directoryPath),
-        extractArk4: (directoryPath: string) => ipcRenderer.invoke('dialog:extractArk4', directoryPath),
+        extractArk4: (directoryPath: string, type: string) => ipcRenderer.invoke('dialog:extractArk4', directoryPath, type),
         extractChronoswitch: (directoryPath: string) => ipcRenderer.invoke('dialog:extractChronoswitch', directoryPath)
     })

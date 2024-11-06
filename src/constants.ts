@@ -32,6 +32,8 @@ export type FolderName =
     | 'update'
     | 'psp_game';
 
+export type ARK4_type = "temp" | "cIPL" | "full" | "update";
+
 export const folderMap: Record<FolderName, string> = {
     themes: "PSP/THEME",
     music: "MUSIC",
@@ -45,4 +47,4 @@ export const folderMap: Record<FolderName, string> = {
 };
 
 export const MIN_WIDTH = 1100;
-export const MIN_HEIGHT = 600;
+export const MIN_HEIGHT = 545;
