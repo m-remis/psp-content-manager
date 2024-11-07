@@ -150,7 +150,7 @@ body {
 }
 
 .wave {
-    background: url(../assets/wave.svg) repeat-x;
+    background: url(../../assets/wave.svg) repeat-x;
     position: absolute;
     width: 6400px;
     top: -198px;

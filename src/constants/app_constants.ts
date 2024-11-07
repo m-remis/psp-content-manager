@@ -1,7 +1,8 @@
 import {shell} from "electron";
-/*
-    For additional menu items, just add entry
- */
+
+export const INSTANCE_WINDOW_MIN_WIDTH = 1100;
+export const INSTANCE_WINDOW_MIN_HEIGHT = 545;
+
 export const MENU_CONTENT = [
     {
         label: 'Help',
