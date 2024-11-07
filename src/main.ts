@@ -2,8 +2,8 @@ import {app, BrowserWindow, dialog, ipcMain, Menu, shell} from 'electron';
 import {promises as fs} from 'fs';
 import * as path from 'path';
 import AdmZip from 'adm-zip';
-import {ARK4_type, FOLDER_STRUCTURE, folderMap, FolderName, INSTANCE_WINDOW_MIN_HEIGHT, INSTANCE_WINDOW_MIN_WIDTH} from './constants';
-import {MENU_CONTENT} from "./windowMenu";
+import {ARK4_type, FOLDER_STRUCTURE, folderMap, FolderName} from "./constants/psp_folder_constants";
+import {INSTANCE_WINDOW_MIN_HEIGHT, INSTANCE_WINDOW_MIN_WIDTH, MENU_CONTENT} from "./constants/app_constants";
 
 let mainWindow: BrowserWindow | null;
 
@@ -27,12 +27,12 @@ function createMainWindow() {
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            preload: path.join(__dirname, '../dist/preload.js')
+            preload: path.join(__dirname, '/preload.js')
         }
     });
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(MENU_CONTENT));
-    mainWindow.loadFile(path.join(__dirname, '../src/index.html'));
+    mainWindow.loadFile(path.join(__dirname, '/renderer/index.html'));
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
