@@ -1,3 +1,7 @@
+/*
+    used for folder structure creation, if you want to add / remove something for that process,
+    this is the place you edit
+ */
 export const FOLDER_STRUCTURE = [
     'ISO',
     'MUSIC',
@@ -21,6 +25,9 @@ export const FOLDER_STRUCTURE = [
     'PSP/GAME/RECOVERY'
 ];
 
+/*
+    used for folder navigation
+ */
 export type FolderName =
     'themes'
     | 'music'
@@ -41,8 +48,10 @@ export const folderMap: Record<FolderName, string> = {
     saveFiles: "PSP/SAVEDATA",
     plugins: "seplugins",
     update: "PSP/GAME/UPDATE",
-    psp_game : "PSP/GAME"
+    psp_game: "PSP/GAME"
 };
 
-export const MIN_WIDTH = 1100;
-export const MIN_HEIGHT = 600;
+export type ARK4_type = "temp" | "cIPL" | "full" | "update";
+
+export const INSTANCE_WINDOW_MIN_WIDTH = 1100;
+export const INSTANCE_WINDOW_MIN_HEIGHT = 545;

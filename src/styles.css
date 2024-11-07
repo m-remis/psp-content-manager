@@ -187,41 +187,25 @@ body {
 /* Main Content Styling */
 #pathIndicator {
     color: #ffffff;
-    font-size: 1.2rem;
-    margin-left: 1%; /* Adjusted space between button and status text */
+    font-size: 1.1rem;
+    margin-left: 1%;
     margin-top: 2%;
 }
 
 .button-container {
-    display: flex; /* Use flexbox for alignment */
-    align-items: center; /* Align items vertically */
-}
-
-.flex-container {
-    display: flex; /* Use flexbox for layout */
-    margin-top: 20px;
-}
-
-.section {
-    margin-right: 40px; /* Space between sections */
-    min-width: 20%; /* Set a minimum width for sections */
-}
-
-/* Remove margin from the last section */
-.section:last-child {
-    margin-right: 0;
+    display: flex;
+    align-items: center;
 }
 
 .w3-button {
-    min-width: 250px;
+    min-width: 200px;
     padding: 12px;
     text-align: left;
     white-space: nowrap;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-top: 2%;
 }
 
-/* Style the tab buttons */
 .tab-buttons {
     display: flex;
     cursor: pointer;
@@ -241,7 +225,6 @@ body {
     border-right: 1px solid #ffffff;
 }
 
-/* Highlight active tab */
 .tab-buttons .active {
     border: 1px solid #ffffff;
     border-bottom: transparent;
@@ -249,7 +232,6 @@ body {
     background: linear-gradient(to bottom, #030303, transparent)
 }
 
-/* Hide all tab content by default */
 .tabcontent {
     display: none;
 }
@@ -257,10 +239,6 @@ body {
 .w3-border-top {
     margin-left: 40%;
     margin-top: -1px;
-}
-
-.button-container {
-    margin-top: 1%;
 }
 
 #brnOpenCardDir {

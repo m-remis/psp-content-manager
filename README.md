@@ -1,59 +1,21 @@
-![node](https://img.shields.io/badge/Node-green)
-![npm](https://img.shields.io/badge/npm-red)
-![electron](https://img.shields.io/badge/Electron%20-purple)
-![typescript](https://img.shields.io/badge/Typescript%20-blue)
-
 ## Psp content manager
 
 ### Purpose
 
+Simple utility application that allows:
 - Instant folder navigation: instantly opening file explorer in root of target folder
 - Folder structure creation: generation of the necessary directory tree for PSP files
 - Extraction of specific files to their target destinations, such as ARK4, Chronoswitch and official sw updates
 
-![Preview](docs/preview.gif)
+![Preview](docs/doc-assets/preview.gif)
 
-### How to setup development environment
+### [User manual](docs/USER_MANUAL.md)
+### [Dev manual](docs/DEV_MANUAL.md)
 
-#### Make sure to have installed
+### Resources
 
-* [Node](https://nodejs.org/en)
+I need to mention following sources, thanking them for their excellent documentation that made my life about 23% less miserable
 
-#### Install dependencies
+[PSPunk](https://www.pspunk.com/)
 
-```` 
-npm install
-````
-
-#### Build the project
-
-````
-npm run build
-````
-
-#### Start the project
-
-````
-npm start
-````
-
-#### Creating executables
-
-````
-npm run package-linux
-````
-
-````
-npm run package-win
-````
-
-Executables can be then found under [release](release)
-
-- [linux](release/linux)
-- [windows](release/win)
-
-#### Remove all downloaded dependencies and generated files
-
-````
-npm run purge
-````
+[ARK4](https://github.com/PSP-Archive/ARK-4)
