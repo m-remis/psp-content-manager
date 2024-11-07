@@ -2,7 +2,7 @@ import {app, BrowserWindow, dialog, ipcMain, Menu, shell} from 'electron';
 import {promises as fs} from 'fs';
 import * as path from 'path';
 import AdmZip from 'adm-zip';
-import {ARK4_type, FOLDER_STRUCTURE, folderMap, FolderName, MIN_HEIGHT, MIN_WIDTH} from './constants';
+import {ARK4_type, FOLDER_STRUCTURE, folderMap, FolderName, INSTANCE_WINDOW_MIN_HEIGHT, INSTANCE_WINDOW_MIN_WIDTH} from './constants';
 import {MENU_CONTENT} from "./windowMenu";
 
 let mainWindow: BrowserWindow | null;
@@ -19,10 +19,10 @@ if (!app.requestSingleInstanceLock()) {
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
-        width: MIN_WIDTH,
-        height: MIN_HEIGHT,
-        minWidth: MIN_WIDTH,
-        minHeight: MIN_HEIGHT,
+        width: INSTANCE_WINDOW_MIN_WIDTH,
+        height: INSTANCE_WINDOW_MIN_HEIGHT,
+        minWidth: INSTANCE_WINDOW_MIN_WIDTH,
+        minHeight: INSTANCE_WINDOW_MIN_HEIGHT,
         resizable: true,
         webPreferences: {
             nodeIntegration: false,

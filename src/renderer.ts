@@ -75,7 +75,7 @@ async function createFileStructure() {
     }
 
     try {
-        const resultMessage = await window.electron.createFolder(directoryPath);
+        const resultMessage = await window.electron.createMissingFolders(directoryPath);
         console.debug(resultMessage);
         alert(resultMessage ? "Created" : "Error creating folder structure");
     } catch (error) {
@@ -114,7 +114,7 @@ async function transferOfw() {
         alert(noMemoryCardSelectedMsg);
         return;
     }
-    const transferred = await window.electron.transferUpdate(directoryPath);
+    const transferred = await window.electron.transferOfwUpdate(directoryPath);
     if (transferred !== "Cancelled") {
         alert(transferred);
     }
