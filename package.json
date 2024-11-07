@@ -7,6 +7,7 @@
     "build": "echo Building TypeScript project... && tsc && node copy-assets.js",
     "start": "npm run build && echo Starting Electron... && electron .",
     "package-win": "echo Packaging for Windows... && npm run build && npm run modclean && electron-builder --win --x64",
+    "package-appimage": "echo Packaging for AppImage... && npm run build && npm run modclean && electron-builder --linux --x64",
     "purge": "echo Cleaning up... && rimraf release dist node_modules",
     "modclean": "modclean --run"
   },
@@ -32,11 +33,13 @@
       "target": "portable",
       "asar": true,
       "icon": "assets/icon.ico",
-      "artifactName": "PSP_CM-${version}.exe"
+      "artifactName": "PSP-Content-Manager-portable-${version}.exe"
     },
     "linux": {
       "target": "AppImage",
-      "category": "Utility"
+      "category": "Utility",
+      "icon": "assets/icon.png",
+      "artifactName": "PSP-Content-Manager-portable-${version}.AppImage"
     }
   },
   "author": "https://github.com/m-remis",
@@ -44,9 +47,9 @@
   "devDependencies": {
     "@types/adm-zip": "0.5.6",
     "@types/electron": "1.6.12",
-    "@types/node": "22.8.6",
+    "@types/node": "^22.9.0",
     "clean-css": "5.3.3",
-    "electron": "33.0.2",
+    "electron": "^33.1.0",
     "electron-builder": "25.1.8",
     "html-minifier": "4.0.0",
     "modclean": "3.0.0-beta.1",
