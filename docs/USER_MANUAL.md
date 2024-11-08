@@ -1,38 +1,56 @@
-## Installation
+## Usage Guide
 
-1. Download the latest release
-2. Unzip the file and open the extracted folder.
-3. Run the executable to launch the application.
+### 1. **Categories**
 
-For portable version, downloading the .exe is sufficient
+The application is divided into the following categories for easy navigation:
 
-## Usage
+- **Open Folder**
+- **Functions**
+- **Firmware**
 
-### 1. Selecting a Memory Card
-- **Select Memory Card**: Click the "Select Memory Card" button. This will allow you to choose your PSP's memory card directory. The path will be displayed in the indicator next to the button. If no card is selected, the message will show "No card selected."
+---
 
-### 2. Open PSP Folder
-Navigate through folders with the following options in the **Folders** tab:
-- **Themes**: Opens the PSP's theme folder.
-- **Games**: Opens the games directory.
-- **Music**: Opens the music folder.
-- **Video**: Opens the video directory.
-- **Pictures**: Opens the images folder.
-- **Save Files**: Access saved game files.
-- **Plugins**: Opens the plugins folder.
+### 2. **Open Folder**
 
-### 3. Perform Functions
-Within the **Functions** tab, you have access to different tools:
-- **Create Missing Folders**: Sets up the standard PSP folder structure if folders are missing.
-- **Extract ARK4 Options**:
-    - *Live*, *cIPL*, *Full*, *Update*: Extract ARK4 files based on the chosen option.
-- **Extract Chronoswitch**: Extract the Chronoswitch downgrader files.
-- **Transfer OFW Update**: Renames to correct format and moves official firmware update files to the correct directory.
+Navigate through the folders on your PSP memory card with the following options:
 
-### 4. Opening Folder in File Explorer
-- Click **Open** to instantly open the selected memory card directory in the file explorer.
+| **Button**     | **Action**                         |
+|----------------|------------------------------------|
+| **Themes**     | Opens the PSP theme folder.        |
+| **Games**      | Accesses the game directory.       |
+| **Music**      | Opens the music folder.            |
+| **Video**      | Opens the video directory.         |
+| **Pictures**   | Accesses the image folder.         |
+| **Save Files** | Opens the saved game files folder. |
+| **Plugins**    | Accesses the plugins folder.       |
 
-## Troubleshooting
-- **No Memory Card Detected**: Ensure the memory card is connected and try selecting it again.
-- **Missing Folders**: If required folders are missing, click **Create Missing Folders** in the **Functions** tab.
-- **Failed Extraction**: Ensure the memory card has enough storage and the target folders are available.
+To open any folder, click the respective button.
+
+---
+
+### 3. **Functions**
+
+Perform various operations on the PSP memory card through the **Functions** tab:
+
+| **Button**                 | **Action**                                                           |
+|----------------------------|----------------------------------------------------------------------|
+| **Create Missing Folders** | Generates any missing standard PSP folders                           |
+| **Backup Save Files**      | Backs up the save files from the memory card, saves them as zip file |
+| **Load Save Files**        | Extracts save files from zip file to memory card                     |
+
+---
+
+### 4. **Firmware**
+
+This section allows you to perform firmware-related operations:
+
+| **Button**          | **Action**                                                                            |
+|---------------------|---------------------------------------------------------------------------------------|
+| **ARK4 Live**       | Extracts ARK4 *Live* installation files from zip file to memory card                  |
+| **ARK4 cIPL**       | Extracts ARK4 *cIPL* installation files from zip file to memory card                  |
+| **ARK4 Full**       | Extracts ARK4 *full* installation files from zip file to memory card                  |
+| **ARK4 Update**     | Extracts ARK4 *update* files from zip file to memory card                             |
+| **Chronoswitch**    | Extract the Chronoswitch downgrader files from zip to memory card                     |
+| **Firmware Update** | Renames and moves official firmware update files to the correct folder on memory card |
+
+---

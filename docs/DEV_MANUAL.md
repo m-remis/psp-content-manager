@@ -4,7 +4,7 @@
 ![typescript](https://img.shields.io/badge/Typescript%20-blue)
 
 
-This just simple application is built using Electron, with minimal dependencies to keep it lightweight and straightforward. It leverages core Electron modules and a small set of production libraries, focusing on essential functionality without additional frameworks.
+This is just simple application built using Electron, with minimal dependencies to keep it lightweight and straightforward. It leverages core Electron modules and a small set of production libraries, focusing on essential functionality without additional frameworks.
 
 #### UI:
 The interface is designed with basic HTML and CSS for simplicity and ease of customization. This approach minimizes the app's size and dependencies, ensuring faster load times and a clean, accessible design.
@@ -32,7 +32,7 @@ npm install
 npm run build
 ````
 
-#### Start the project
+#### Start the project (will rebuild itself before the start)
 
 ````
 npm start

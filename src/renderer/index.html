@@ -21,8 +21,8 @@
         <div class="tab-buttons">
             <div onclick="openTab(event, 'OpenFolder')" class="active">Folders</div>
             <div onclick="openTab(event, 'Functions')">Functions</div>
+            <div onclick="openTab(event, 'Firmware')">Firmware</div>
         </div>
-        <div class="w3-border-top w3-border-white"></div>
 
         <!-- Tab content -->
         <div id="OpenFolder" class="tabcontent" style="display: block;">
@@ -39,19 +39,26 @@
         </div>
 
         <div id="Functions" class="tabcontent">
-            <h3 class="w3-text-white">Perform function</h3>
+            <h3 class="w3-text-white">Perform operation</h3>
             <div class="buttons">
                 <button id="btnCreateFileStructure" class="w3-button w3-orange w3-ripple w3-round">Create missing folders</button>
-                <button id="btnExtractArk4Tmp" class="w3-button w3-deep-purple w3-ripple w3-round">Extract ARK4 Live</button>
-                <button id="btnExtractArk4Cipl" class="w3-button w3-deep-purple w3-ripple w3-round">Extract ARK4 cIPL</button>
-                <button id="btnExtractArk4Full" class="w3-button w3-deep-purple w3-ripple w3-round">Extract ARK4 Full</button>
-                <button id="btnExtractArk4Update" class="w3-button w3-deep-purple w3-ripple w3-round">Extract ARK4 Update</button>
-                <button id="btnExtractChronoswitch" class="w3-button w3-deep-purple w3-ripple w3-round">Extract Chronoswitch</button>
-                <button id="btnTransferOfw" class="w3-button w3-deep-purple w3-ripple w3-round">Transfer OFW update</button>
-                <button id="btnCreatePlaylist" class="w3-button w3-deep-purple w3-ripple w3-round">Create music playlist</button>
-                <button id="btnOrganizeGames" class="w3-button w3-deep-purple w3-ripple w3-round">Organize games</button>
+                <button id="btnBackupSaveFiles" class="w3-button w3-orange w3-ripple w3-round">Backup save files</button>
+                <button id="btnExtractSaveFiles" class="w3-button w3-orange w3-ripple w3-round">Load save files</button>
             </div>
         </div>
+
+        <div id="Firmware" class="tabcontent">
+            <h3 class="w3-text-white">Extract files directly to memory card</h3>
+            <div class="buttons">
+                <button id="btnExtractArk4Tmp" class="w3-button w3-deep-purple w3-ripple w3-round">ARK4 Live</button>
+                <button id="btnExtractArk4Cipl" class="w3-button w3-deep-purple w3-ripple w3-round">ARK4 cIPL</button>
+                <button id="btnExtractArk4Full" class="w3-button w3-deep-purple w3-ripple w3-round">ARK4 Full</button>
+                <button id="btnExtractArk4Update" class="w3-button w3-deep-purple w3-ripple w3-round">ARK4 Update</button>
+                <button id="btnExtractChronoswitch" class="w3-button w3-deep-purple w3-ripple w3-round">Chronoswitch</button>
+                <button id="btnTransferOfw" class="w3-button w3-deep-purple w3-ripple w3-round">Firmware update</button>
+            </div>
+        </div>
+        <!-- Tab content -->
     </div>
 </div>
 
