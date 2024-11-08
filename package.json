@@ -1,6 +1,6 @@
 {
   "name": "psp_cm",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Cross-platform tool for psp filesystem manipulation",
   "main": "dist/main.js",
   "scripts": {
