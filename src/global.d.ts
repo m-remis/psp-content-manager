@@ -1,7 +1,7 @@
 declare global {
     interface Window {
         electron: {
-            openFileDialog: () => Promise<string | null>;
+            selectMemoryCardDir: () => Promise<string | null>;
             createMissingFolders: (directoryPath: string) => Promise<boolean>;
             transferOfwUpdate: (directoryPath: string) => Promise<string>;
             isTargetEmpty: (directoryPath: string, folderName: string) => Promise<boolean>;

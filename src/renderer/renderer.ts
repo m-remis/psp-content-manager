@@ -58,7 +58,7 @@ Object.keys(buttonActions).forEach(buttonId => {
 });
 
 async function selectMemoryCard() {
-    const filePath = await window.electron.openFileDialog();
+    const filePath = await window.electron.selectMemoryCardDir();
     if (filePath) {
         directoryPath = filePath;
         updatePathIndicatorMessage(`Selected: ${directoryPath}`);

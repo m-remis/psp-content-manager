@@ -2,7 +2,7 @@ import {contextBridge, ipcRenderer} from 'electron';
 
 contextBridge.exposeInMainWorld('electron',
     {
-        openFileDialog: () => ipcRenderer.invoke('dialog:selectMemoryCardRoot'),
+        selectMemoryCardDir: () => ipcRenderer.invoke('dialog:selectMemoryCardRoot'),
         isTargetEmpty: (directoryPath: string, folderName: string) => ipcRenderer.invoke('folder:isEmpty', directoryPath, folderName),
         createMissingFolders: (directoryPath: string) => ipcRenderer.invoke('folder:createMissingFiles', directoryPath),
         openTargetDirectory: (directoryPath: string, folderName: string) => ipcRenderer.invoke('dialog:openTargetDirectory', directoryPath, folderName),
