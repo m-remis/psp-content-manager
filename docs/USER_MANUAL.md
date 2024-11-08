@@ -1,6 +1,6 @@
 ## Usage Guide
 
-### 1. **Categories**
+### **Categories**
 
 The application is divided into the following categories for easy navigation:
 
@@ -10,25 +10,25 @@ The application is divided into the following categories for easy navigation:
 
 ---
 
-### 2. **Open Folder**
+### **Open Folder**
 
 Navigate through the folders on your PSP memory card with the following options:
 
 | **Button**     | **Action**                         |
 |----------------|------------------------------------|
 | **Themes**     | Opens the PSP theme folder.        |
-| **Games**      | Accesses the game directory.       |
+| **Games**      | Opens the game directory (ISO).    |
 | **Music**      | Opens the music folder.            |
 | **Video**      | Opens the video directory.         |
-| **Pictures**   | Accesses the image folder.         |
+| **Pictures**   | Opens the image folder.            |
 | **Save Files** | Opens the saved game files folder. |
-| **Plugins**    | Accesses the plugins folder.       |
+| **Plugins**    | Opens the plugins folder.          |
 
 To open any folder, click the respective button.
 
 ---
 
-### 3. **Functions**
+### **Functions**
 
 Perform various operations on the PSP memory card through the **Functions** tab:
 
@@ -40,7 +40,7 @@ Perform various operations on the PSP memory card through the **Functions** tab:
 
 ---
 
-### 4. **Firmware**
+### **Firmware**
 
 This section allows you to perform firmware-related operations:
 
