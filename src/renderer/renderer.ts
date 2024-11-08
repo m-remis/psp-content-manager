@@ -6,8 +6,7 @@ let directoryPath: string = '';
 const buttonIds = {
     main: {
         selectMemoryCard: 'btnSelectMemoryCard',
-        createFileStructure: 'btnCreateFileStructure',
-        openCardDir: 'brnOpenCardDir',
+        openCardDir: 'brnOpenCardDir'
     },
     openFolders: {
         themes: 'btnOpenThemes',
@@ -19,20 +18,22 @@ const buttonIds = {
         plugins: 'btnOpenPlugins',
     },
     functions: {
+        backupSaveFiles: 'btnBackupSaveFiles',
+        extractSaveFiles: 'btnExtractSaveFiles',
+        createFileStructure: 'btnCreateFileStructure'
+    },
+    firmware: {
         extractArk4Temp: 'btnExtractArk4Tmp',
         extractArk4Cipl: 'btnExtractArk4Cipl',
         extractArk4Full: 'btnExtractArk4Full',
         extractArk4Update: 'btnExtractArk4Update',
         extractChronoswitch: 'btnExtractChronoswitch',
-        transferOfw: 'btnTransferOfw',
-        createPlaylist: 'btnCreatePlaylist',
-        organizeGames: 'btnOrganizeGames',
-    },
+        transferOfw: 'btnTransferOfw'
+    }
 };
 
 const buttonActions = {
     [buttonIds.main.selectMemoryCard]: selectMemoryCard,
-    [buttonIds.main.createFileStructure]: createFileStructure,
     [buttonIds.main.openCardDir]: openCardDir,
     [buttonIds.openFolders.plugins]: () => openTargetDirectory('plugins'),
     [buttonIds.openFolders.themes]: () => openTargetDirectory('themes'),
@@ -41,14 +42,15 @@ const buttonActions = {
     [buttonIds.openFolders.video]: () => openTargetDirectory('videos'),
     [buttonIds.openFolders.pictures]: () => openTargetDirectory('pictures'),
     [buttonIds.openFolders.saveFiles]: () => openTargetDirectory('saveFiles'),
-    [buttonIds.functions.transferOfw]: transferOfw,
-    [buttonIds.functions.extractArk4Temp]: () => extractArk4('temp'),
-    [buttonIds.functions.extractArk4Cipl]: () => extractArk4('cIPL'),
-    [buttonIds.functions.extractArk4Full]: () => extractArk4('full'),
-    [buttonIds.functions.extractArk4Update]: () => extractArk4('update'),
-    [buttonIds.functions.extractChronoswitch]: extractChronoswitch,
-    [buttonIds.functions.createPlaylist]: createNotImplementedAlert,
-    [buttonIds.functions.organizeGames]: createNotImplementedAlert,
+    [buttonIds.firmware.transferOfw]: transferOfw,
+    [buttonIds.firmware.extractArk4Temp]: () => extractArk4('temp'),
+    [buttonIds.firmware.extractArk4Cipl]: () => extractArk4('cIPL'),
+    [buttonIds.firmware.extractArk4Full]: () => extractArk4('full'),
+    [buttonIds.firmware.extractArk4Update]: () => extractArk4('update'),
+    [buttonIds.firmware.extractChronoswitch]: extractChronoswitch,
+    [buttonIds.functions.createFileStructure]: createFileStructure,
+    [buttonIds.functions.backupSaveFiles]: backupSaveFiles,
+    [buttonIds.functions.extractSaveFiles]: extractSaveFiles
 };
 
 Object.keys(buttonActions).forEach(buttonId => {
@@ -61,7 +63,6 @@ async function selectMemoryCard() {
         directoryPath = filePath;
         updatePathIndicatorMessage(`Selected: ${directoryPath}`);
         setElementVisibility(true, buttonIds.main.openCardDir);
-        setElementVisibility(true, buttonIds.main.createFileStructure);
     } else {
         updatePathIndicatorMessage(noMemoryCardSelectedMsg);
     }
@@ -144,8 +145,34 @@ async function extractChronoswitch() {
     }
 }
 
-function createNotImplementedAlert() {
-    alert("Not implemented");
+async function backupSaveFiles() {
+    console.debug("Renderer - Backup save files...");
+    if (!directoryPath) {
+        alert(noMemoryCardSelectedMsg);
+        return;
+    }
+    const saveFilesEmpty = await window.electron.isTargetEmpty(directoryPath, "saveFiles");
+    if (saveFilesEmpty) {
+        alert("No save files on memory card");
+        return;
+    }
+
+    const extractResult = await window.electron.backupSaveFiles(directoryPath);
+    if (extractResult !== "Cancelled") {
+        alert(extractResult);
+    }
+}
+
+async function extractSaveFiles() {
+    console.debug("Renderer - Extract save files...");
+    if (!directoryPath) {
+        alert(noMemoryCardSelectedMsg);
+        return;
+    }
+    const extractResult = await window.electron.extractSaveFiles(directoryPath);
+    if (extractResult !== "Cancelled") {
+        alert(extractResult);
+    }
 }
 
 function updatePathIndicatorMessage(message: string): void {

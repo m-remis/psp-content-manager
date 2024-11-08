@@ -64,6 +64,8 @@ ipcMain.handle('dialog:openTargetDirectory', handleOpenTargetDirectory);
 ipcMain.handle('dialog:openRootDirectory', handleOpenRootDirectory);
 ipcMain.handle('dialog:extractArk4', handleExtractArk4);
 ipcMain.handle('dialog:extractChronoswitch', handleExtractChronoswitch);
+ipcMain.handle('dialog:extractSaveFiles', extractSaveFiles);
+ipcMain.handle('dialog:backupSaveFiles', backupSaveFiles);
 
 async function handleDialogOpenFile() {
     try {
@@ -88,9 +90,13 @@ async function handleCreateFolder(_event: any, directoryPath: string) {
     }
 }
 
-async function handleIsFolderEmpty(_event: any, directoryPath: string): Promise<boolean> {
+async function handleIsFolderEmpty(_event: any, directoryPath: string, folderName: FolderName): Promise<boolean> {
+    let targetDir = directoryPath;
+    if (folderName) {
+        targetDir = path.join(targetDir, folderMap[folderName])
+    }
     try {
-        const files = await fs.readdir(directoryPath);
+        const files = await fs.readdir(targetDir);
         return files.length === 0;
     } catch (error) {
         console.error("Error checking if directory is empty:", error);
@@ -232,4 +238,51 @@ async function extractChronoswitchFolders(zip: AdmZip, directoryPath: string) {
     const sourcePath = 'PSP/GAME/ChronoSwitch/';
     const destinationPath = path.join(directoryPath, folderMap["psp_game"], 'Chronoswitch');
     zip.extractEntryTo(sourcePath, destinationPath, false, true);
+}
+
+async function backupSaveFiles(_event: any, directoryPath: string) {
+    try {
+        const result = await dialog.showSaveDialog({
+            filters: [{name: 'Zip Files', extensions: ['zip']}]
+        });
+
+        if (result.canceled) return "Cancelled";
+
+        const zipFilePath = result.filePath;
+
+        const zip = new AdmZip();
+        const saveFilesPath = path.join(directoryPath, folderMap["saveFiles"]);
+
+        zip.addLocalFolder(saveFilesPath, "");
+
+        zip.writeZip(zipFilePath);
+
+        return `Backup created successfully at: ${zipFilePath}`;
+    } catch (error) {
+        console.error("Error backing up save files:", error);
+        return "Failed to backup save files.";
+    }
+}
+
+async function extractSaveFiles(_event: any, directoryPath: string) {
+    try {
+        const result = await dialog.showOpenDialog({
+            properties: ['openFile'],
+            filters: [{name: 'Zip Files', extensions: ['zip']}]
+        });
+
+        if (result.canceled) return "Cancelled";
+
+        const zipFilePath = result.filePaths[0];
+
+        const zip = new AdmZip(zipFilePath);
+
+        const saveFilesPath = path.join(directoryPath, folderMap["saveFiles"]);
+        zip.extractAllTo(saveFilesPath, true);
+
+        return "Save files extracted successfully.";
+    } catch (error) {
+        console.error("Error extracting save files:", error);
+        return "Failed to extract save files.";
+    }
 }

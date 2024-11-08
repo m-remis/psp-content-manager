@@ -218,7 +218,7 @@ body {
     color: #f6d9b6;
     border: 1px none #ffffff;
     border-bottom-style: solid;
-    width: 20%;
+    width: 100%;
 }
 
 .tab-buttons div:last-child .active {
@@ -234,11 +234,6 @@ body {
 
 .tabcontent {
     display: none;
-}
-
-.w3-border-top {
-    margin-left: 40%;
-    margin-top: -1px;
 }
 
 #brnOpenCardDir {
