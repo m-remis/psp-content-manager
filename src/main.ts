@@ -56,18 +56,17 @@ function handleAppActivate() {
     if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
 }
 
-ipcMain.handle('dialog:openFile', handleDialogOpenFile);
-ipcMain.handle('folder:create', handleCreateFolder);
+ipcMain.handle('dialog:selectMemoryCardRoot', handleSelectCardRoot);
+ipcMain.handle('folder:createMissingFiles', handleCreateAllMissingFiles);
 ipcMain.handle('folder:isEmpty', handleIsFolderEmpty);
 ipcMain.handle('dialog:transferUpdate', handleTransferUpdate);
 ipcMain.handle('dialog:openTargetDirectory', handleOpenTargetDirectory);
-ipcMain.handle('dialog:openRootDirectory', handleOpenRootDirectory);
 ipcMain.handle('dialog:extractArk4', handleExtractArk4);
 ipcMain.handle('dialog:extractChronoswitch', handleExtractChronoswitch);
 ipcMain.handle('dialog:extractSaveFiles', extractSaveFiles);
 ipcMain.handle('dialog:backupSaveFiles', backupSaveFiles);
 
-async function handleDialogOpenFile() {
+async function handleSelectCardRoot() {
     try {
         const result = await dialog.showOpenDialog({
             properties: ['openDirectory'],
@@ -80,7 +79,7 @@ async function handleDialogOpenFile() {
     }
 }
 
-async function handleCreateFolder(_event: any, directoryPath: string) {
+async function handleCreateAllMissingFiles(_event: any, directoryPath: string) {
     try {
         await createFolderStructure(directoryPath);
         return `Folder structure created at: ${directoryPath}`;
@@ -124,26 +123,19 @@ async function handleTransferUpdate(_event: any, directoryPath: string) {
     }
 }
 
-async function handleOpenTargetDirectory(_event: any, directoryPath: string, targetFolder: FolderName) {
+async function handleOpenTargetDirectory(_event: any, directoryPath: string, targetFolder: FolderName | null) {
+    console.debug("Main - open target dir")
+    let targetDir = directoryPath;
+    if (targetFolder) {
+        targetDir = path.join(targetDir, folderMap[targetFolder])
+    }
+
     try {
-        const fullPath = path.join(directoryPath, folderMap[targetFolder]);
-        await fs.stat(fullPath);
-        await shell.openPath(fullPath);
+        await fs.stat(targetDir);
+        await shell.openPath(targetDir);
         return true;
     } catch (error) {
         console.error("Error opening directory:", error);
-        return false;
-    }
-}
-
-async function handleOpenRootDirectory(_event: any, directoryPath: string) {
-    try {
-        const fullPath = path.join(directoryPath);
-        await fs.stat(fullPath);
-        await shell.openPath(fullPath);
-        return true;
-    } catch (error) {
-        console.error("Error opening root directory:", error);
         return false;
     }
 }

@@ -91,7 +91,7 @@ async function openCardDir() {
         alert(noMemoryCardSelectedMsg);
         return;
     }
-    const opened = await window.electron.openRootDirectory(directoryPath);
+    const opened = await window.electron.openTargetDirectory(directoryPath, null);
     if (!opened) {
         alert("Could not find target folder");
     }
