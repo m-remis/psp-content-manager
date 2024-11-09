@@ -11,6 +11,7 @@ const buttonIds = {
     openFolders: {
         themes: 'btnOpenThemes',
         games: 'btnOpenGames',
+        iso: 'btnOpenIso',
         music: 'btnOpenMusic',
         video: 'btnOpenVideo',
         pictures: 'btnOpenPictures',
@@ -38,6 +39,7 @@ const buttonActions = {
     [buttonIds.openFolders.plugins]: () => openTargetDirectory('plugins'),
     [buttonIds.openFolders.themes]: () => openTargetDirectory('themes'),
     [buttonIds.openFolders.games]: () => openTargetDirectory('games'),
+    [buttonIds.openFolders.iso]: () => openTargetDirectory('iso'),
     [buttonIds.openFolders.music]: () => openTargetDirectory('music'),
     [buttonIds.openFolders.video]: () => openTargetDirectory('videos'),
     [buttonIds.openFolders.pictures]: () => openTargetDirectory('pictures'),

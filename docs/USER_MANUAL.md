@@ -17,7 +17,8 @@ Navigate through the folders on your PSP memory card with the following options:
 | **Button**     | **Action**                         |
 |----------------|------------------------------------|
 | **Themes**     | Opens the PSP theme folder.        |
-| **Games**      | Opens the game directory (ISO).    |
+| **Games**      | Opens the game directory.          |
+| **ISO**        | Opens the iso directory.           |
 | **Music**      | Opens the music folder.            |
 | **Video**      | Opens the video directory.         |
 | **Pictures**   | Opens the image folder.            |

@@ -37,14 +37,16 @@ export type FolderName =
     | 'saveFiles'
     | 'plugins'
     | 'update'
-    | 'psp_game';
+    | 'psp_game'
+    | 'iso';
 
 export const folderMap: Record<FolderName, string> = {
     themes: "PSP/THEME",
     music: "MUSIC",
     pictures: "PICTURE",
     videos: "VIDEO",
-    games: "ISO",
+    iso: "ISO",
+    games: "PSP/GAME",
     saveFiles: "PSP/SAVEDATA",
     plugins: "seplugins",
     update: "PSP/GAME/UPDATE",
