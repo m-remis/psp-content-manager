@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs";
 import AdmZip from "adm-zip";
 
-async function selectArkOrChronoSwitch(type: TargetZipFileType) : Promise<string | null> {
+async function selectArkOrChronoSwitch(type: TargetZipFileType): Promise<string | null> {
     console.debug(`Selecting zip type: ${type}`);
     const result = await dialog.showOpenDialog({
         properties: ['openFile'],
@@ -54,7 +54,7 @@ async function isTargetDirEmpty(directoryPath: string, folderName: FolderName): 
     return files.length === 0;
 }
 
-async function transferUpdate(directoryPath: string) : Promise<string> {
+async function transferUpdate(directoryPath: string): Promise<string> {
     console.debug("Transfer update")
     const result = await dialog.showOpenDialog({
         properties: ['openFile'],
@@ -69,7 +69,7 @@ async function transferUpdate(directoryPath: string) : Promise<string> {
     return "Transferred";
 }
 
-async function selectCardRoot() : Promise<string | null> {
+async function selectCardRoot(): Promise<string | null> {
     console.debug("Select card root")
     const result = await dialog.showOpenDialog({
         properties: ['openDirectory'],
@@ -120,7 +120,7 @@ async function backupSaveFiles(directoryPath: string): Promise<string> {
     }
 }
 
-async function extractSaveFiles(directoryPath: string) : Promise<string> {
+async function extractSaveFiles(directoryPath: string): Promise<string> {
     console.debug("Extract save files")
     try {
         const result = await dialog.showOpenDialog({

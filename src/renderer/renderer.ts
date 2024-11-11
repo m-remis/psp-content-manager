@@ -141,10 +141,10 @@ async function transferOfw() {
     }
     await window.electron.transferOfwUpdate(directoryPath)
         .then(transferResult => {
-        if (transferResult !== "Cancelled") {
-            alert(transferResult);
-        }
-    });
+            if (transferResult !== "Cancelled") {
+                alert(transferResult);
+            }
+        });
 }
 
 async function extractArk4(type: string) {

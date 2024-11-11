@@ -7,9 +7,12 @@ import {extractArk4} from "./utils/ark4/ark4_service";
 import {extractChronoSwitch} from "./utils/chronoswitch/chronoswitch_service";
 import {
     backupSaveFiles,
-    createBaseFolderStructure, extractSaveFiles,
-    isTargetDirEmpty, openTargetDirectory,
-    selectArkOrChronoSwitch, selectCardRoot,
+    createBaseFolderStructure,
+    extractSaveFiles,
+    isTargetDirEmpty,
+    openTargetDirectory,
+    selectArkOrChronoSwitch,
+    selectCardRoot,
     transferUpdate
 } from "./utils/directory/psp_directory_utils";
 
@@ -79,7 +82,7 @@ async function handleSelectCardRoot() {
     return await selectCardRoot();
 }
 
-async function handleCreateAllMissingFiles(_event: any, directoryPath: string) : Promise<string> {
+async function handleCreateAllMissingFiles(_event: any, directoryPath: string): Promise<string> {
     try {
         await createBaseFolderStructure(directoryPath);
         return `Folder structure created at: ${directoryPath}`;
@@ -93,11 +96,11 @@ async function handleIsFolderEmpty(_event: any, directoryPath: string, folderNam
     return await isTargetDirEmpty(directoryPath, folderName);
 }
 
-async function handleTransferUpdate(_event: any, directoryPath: string) : Promise<string> {
+async function handleTransferUpdate(_event: any, directoryPath: string): Promise<string> {
     return await transferUpdate(directoryPath);
 }
 
-async function handleOpenTargetDirectory(_event: any, directoryPath: string, targetFolder: FolderName | null) : Promise<boolean> {
+async function handleOpenTargetDirectory(_event: any, directoryPath: string, targetFolder: FolderName | null): Promise<boolean> {
     return await openTargetDirectory(directoryPath, targetFolder);
 }
 
@@ -113,7 +116,7 @@ async function handleExtractChronoswitch(_event: any, directoryPath: string, chr
     return await extractChronoSwitch(directoryPath, chronoSwitchPath);
 }
 
-async function handleBackupSaveFiles(_event: any, directoryPath: string) : Promise<string> {
+async function handleBackupSaveFiles(_event: any, directoryPath: string): Promise<string> {
     return await backupSaveFiles(directoryPath);
 }
 
