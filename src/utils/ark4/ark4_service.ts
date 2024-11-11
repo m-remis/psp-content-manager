@@ -10,7 +10,7 @@ import {githubArk4ReleaseApiUrl} from "../../constants/app_constants";
 const downloadsDir = app.getPath('downloads');
 const arkZipPath = path.join(downloadsDir, 'ARK4.zip');
 
-async function extractArk4(ark4PathOverride: string, directoryPath: string, type: ARK4_type) : Promise<string> {
+async function extractArk4(ark4PathOverride: string, directoryPath: string, type: ARK4_type): Promise<string> {
     console.debug("Extracting ARK4...")
     try {
         let filePath = '';
