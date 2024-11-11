@@ -53,4 +53,12 @@ export const folderMap: Record<FolderName, string> = {
     psp_game: "PSP/GAME"
 };
 
+/*
+    used for ark4 extraction type
+ */
 export type ARK4_type = "temp" | "cIPL" | "full" | "update";
+
+/*
+    used for zip file selection
+ */
+export type TargetZipFileType = "ARK4" | "ChronoSwitch";
