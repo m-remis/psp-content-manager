@@ -21,7 +21,8 @@
         <div class="tab-buttons">
             <div onclick="openTab(event, 'OpenFolder')" class="active">Folders</div>
             <div onclick="openTab(event, 'Functions')">Functions</div>
-            <div onclick="openTab(event, 'Firmware')">Firmware</div>
+            <div onclick="openTab(event, 'ARK4')">ARK4</div>
+            <div onclick="openTab(event, 'ChronoSwitch')">ChronoSwitch</div>
         </div>
 
         <!-- Tab content -->
@@ -29,6 +30,7 @@
             <h3 class="w3-text-white">Open PSP folder</h3>
             <div class="buttons">
                 <button id="btnOpenThemes" class="w3-button w3-gray w3-ripple w3-round">Themes</button>
+                <button id="btnOpenIso" class="w3-button w3-gray w3-ripple w3-round">ISO</button>
                 <button id="btnOpenGames" class="w3-button w3-gray w3-ripple w3-round">Games</button>
                 <button id="btnOpenMusic" class="w3-button w3-gray w3-ripple w3-round">Music</button>
                 <button id="btnOpenVideo" class="w3-button w3-gray w3-ripple w3-round">Video</button>
@@ -41,21 +43,35 @@
         <div id="Functions" class="tabcontent">
             <h3 class="w3-text-white">Perform operation</h3>
             <div class="buttons">
-                <button id="btnCreateFileStructure" class="w3-button w3-orange w3-ripple w3-round">Create missing folders</button>
-                <button id="btnBackupSaveFiles" class="w3-button w3-orange w3-ripple w3-round">Backup save files</button>
-                <button id="btnExtractSaveFiles" class="w3-button w3-orange w3-ripple w3-round">Load save files</button>
+                <button id="btnCreateFileStructure" class="w3-button w3-deep-orange w3-ripple w3-round">Create missing folders</button>
+                <button id="btnBackupSaveFiles" class="w3-button w3-deep-orange w3-ripple w3-round">Backup save files</button>
+                <button id="btnExtractSaveFiles" class="w3-button w3-deep-orange w3-ripple w3-round">Load save files</button>
+                <button id="btnTransferOfw" class="w3-button w3-deep-orange w3-ripple w3-round">Transfer firmware update</button>
             </div>
         </div>
 
-        <div id="Firmware" class="tabcontent">
+        <div id="ARK4" class="tabcontent">
             <h3 class="w3-text-white">Extract files directly to memory card</h3>
+            <div class="button-container">
+                <button id="btnSelectArk4" class="w3-button w3-blue w3-ripple w3-round">Select AR4.zip</button>
+                <span id="ark4PathIndicator">Nothing selected, files will be downloaded automatically from ARK4 repository</span>
+            </div>
             <div class="buttons">
                 <button id="btnExtractArk4Tmp" class="w3-button w3-deep-purple w3-ripple w3-round">ARK4 Live</button>
                 <button id="btnExtractArk4Cipl" class="w3-button w3-deep-purple w3-ripple w3-round">ARK4 cIPL</button>
                 <button id="btnExtractArk4Full" class="w3-button w3-deep-purple w3-ripple w3-round">ARK4 Full</button>
                 <button id="btnExtractArk4Update" class="w3-button w3-deep-purple w3-ripple w3-round">ARK4 Update</button>
+            </div>
+        </div>
+
+        <div id="ChronoSwitch" class="tabcontent">
+            <h3 class="w3-text-white">Extract files directly to memory card</h3>
+            <div class="button-container">
+                <button id="btnSelectChronoSwitch" class="w3-button w3-blue w3-ripple w3-round">Select Chronoswitch.zip</button>
+                <span id="chronoSwitchPathIndicator">Nothing selected, files will be downloaded automatically from ChronoSwitch repository</span>
+            </div>
+            <div class="buttons">
                 <button id="btnExtractChronoswitch" class="w3-button w3-deep-purple w3-ripple w3-round">Chronoswitch</button>
-                <button id="btnTransferOfw" class="w3-button w3-deep-purple w3-ripple w3-round">Firmware update</button>
             </div>
         </div>
         <!-- Tab content -->
@@ -63,18 +79,13 @@
 </div>
 
 <!-- Animated Background -->
+<div id="loadingSpinner" class="spinner-overlay" style="display: none;">
+    <div class="spinner"></div>
+</div>
 <div class="area">
     <ul class="circles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li>
     </ul>
     <div class="ocean">
         <div class="wave"></div>
