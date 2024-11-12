@@ -2,9 +2,11 @@
 ![npm](https://img.shields.io/badge/npm-red)
 ![electron](https://img.shields.io/badge/Electron%20-purple)
 ![typescript](https://img.shields.io/badge/Typescript%20-blue)
-
+---
 
 This is just simple application built using Electron, with minimal dependencies to keep it lightweight and straightforward. It leverages core Electron modules and a small set of production libraries, focusing on essential functionality without additional frameworks.
+
+---
 
 #### UI:
 The interface is designed with basic HTML and CSS for simplicity and ease of customization. This approach minimizes the app's size and dependencies, ensuring faster load times and a clean, accessible design.
@@ -12,6 +14,7 @@ The interface is designed with basic HTML and CSS for simplicity and ease of cus
 #### Backend:
 The application’s backend logic is implemented in TypeScript, providing type safety and clarity for handling filesystem interactions, folder navigation, and file extraction operations.
 
+---
 ## Development Setup
 
 #### Prerequisites
@@ -58,3 +61,9 @@ Executables can be then found under [release](release)
 ````
 npm run purge
 ````
+
+#### Testing
+
+Just create empty folder and select it lol I idk
+
+---
