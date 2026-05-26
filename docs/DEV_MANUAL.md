@@ -44,7 +44,7 @@ npm start
 #### Creating executables
 
 ````
-npm run package-linux
+npm run package-appimage
 ````
 
 ````
